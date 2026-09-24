@@ -1,0 +1,322 @@
+[
+  {
+    "productId": "MED-0001",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-0152",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0002",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-0213",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0003",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-1717",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0004",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-2980",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0005",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-4462",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0006",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-7510",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0007",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0002-7715",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0008",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0006-3516",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0009",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0006-3856",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0010",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0008-0841",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0011",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0009-0005",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0012",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0009-0012",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0013",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0013-0101",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0014",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0023-0240",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0015",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0023-2181",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0016",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0023-5858",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0017",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0025-1411",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0018",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-0100",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0019",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-0101",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0020",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-2097",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0021",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-8655",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.675Z"
+  },
+  {
+    "productId": "MED-0022",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-8692",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0023",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-8694",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0024",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-8702",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0025",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0031-8744",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0026",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0037-0245",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0027",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0054-0007",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0028",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0054-0088",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0029",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0054-0326",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0030",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0054-4496",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0031",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0065-0509",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0032",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0065-0518",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0033",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0065-0795",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0034",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0067-0118",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0035",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0069-1520",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0036",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0069-4190",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0037",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0069-6180",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0038",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0074-1658",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0039",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0093-0311",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  },
+  {
+    "productId": "MED-0040",
+    "sourceName": "openFDA NDC Directory",
+    "sourceUrl": "https://open.fda.gov/data/ndc/",
+    "sourceIdentifier": "0113-0032",
+    "dataType": "reference",
+    "dataLastUpdated": "2026-09-24T15:38:59.676Z"
+  }
+]

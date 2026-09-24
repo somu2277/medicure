@@ -1,0 +1,41 @@
+[
+  { "subcategoryId": "daily-wellness", "categoryId": "health-must-haves", "name": "Daily Wellness", "slug": "daily-wellness", "active": true },
+  { "subcategoryId": "first-aid", "categoryId": "health-must-haves", "name": "First Aid", "slug": "first-aid", "active": true },
+  
+  { "subcategoryId": "diabetes-care", "categoryId": "diabetes-essentials", "name": "Diabetes Care", "slug": "diabetes-care", "active": true },
+  
+  { "subcategoryId": "bath-body", "categoryId": "personal-care", "name": "Bath & Body", "slug": "bath-body", "active": true },
+  { "subcategoryId": "hair-care", "categoryId": "personal-care", "name": "Hair Care", "slug": "hair-care", "active": true },
+  
+  { "subcategoryId": "multivitamins", "categoryId": "vitamins-supplements", "name": "Multivitamins", "slug": "multivitamins", "active": true },
+  { "subcategoryId": "calcium", "categoryId": "vitamins-supplements", "name": "Calcium", "slug": "calcium", "active": true },
+  
+  { "subcategoryId": "sexual-wellness-items", "categoryId": "sexual-wellness", "name": "Sexual Wellness Items", "slug": "sexual-wellness-items", "active": true },
+  
+  { "subcategoryId": "whey-protein", "categoryId": "sports-nutrition", "name": "Whey Protein", "slug": "whey-protein", "active": true },
+  { "subcategoryId": "electrolytes", "categoryId": "sports-nutrition", "name": "Electrolytes", "slug": "electrolytes", "active": true },
+  
+  { "subcategoryId": "blood-pressure-monitors", "categoryId": "healthcare-devices", "name": "Blood Pressure Monitors", "slug": "blood-pressure-monitors", "active": true },
+  
+  { "subcategoryId": "pet-nutrition", "categoryId": "pet-care", "name": "Pet Nutrition", "slug": "pet-nutrition", "active": true },
+  
+  { "subcategoryId": "healthy-snacks", "categoryId": "health-food-drinks", "name": "Healthy Snacks", "slug": "healthy-snacks", "active": true },
+  
+  { "subcategoryId": "homeopathic-wellness", "categoryId": "homeopathy-care", "name": "Homeopathic Wellness", "slug": "homeopathic-wellness", "active": true },
+  
+  { "subcategoryId": "ayurvedic-wellness", "categoryId": "ayurvedic-care", "name": "Ayurvedic Wellness", "slug": "ayurvedic-wellness", "active": true },
+  
+  { "subcategoryId": "baby-care", "categoryId": "mother-baby-care", "name": "Baby Care", "slug": "baby-care", "active": true },
+  
+  { "subcategoryId": "walking-aids", "categoryId": "mobility-elderly-care", "name": "Walking Aids", "slug": "walking-aids", "active": true },
+  
+  { "subcategoryId": "pain-relief", "categoryId": "health-concern", "name": "Pain Relief", "slug": "pain-relief", "active": true },
+  { "subcategoryId": "cold-cough", "categoryId": "health-concern", "name": "Cold & Cough", "slug": "cold-cough", "active": true },
+  
+  { "subcategoryId": "face-care", "categoryId": "skin-care", "name": "Face Care", "slug": "face-care", "active": true },
+  
+  { "subcategoryId": "immunity", "categoryId": "monsoon-store", "name": "Immunity", "slug": "immunity", "active": true },
+  
+  { "subcategoryId": "prescription-drugs", "categoryId": "medicines", "name": "Prescription Drugs", "slug": "prescription-drugs", "active": true },
+  { "subcategoryId": "otc-drugs", "categoryId": "medicines", "name": "OTC Drugs", "slug": "otc-drugs", "active": true }
+]

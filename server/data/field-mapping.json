@@ -1,0 +1,12 @@
+{
+  "name": "PROPRIETARYNAME + ACTIVE_NUMERATOR_STRENGTH + ACTIVE_INGRED_UNIT",
+  "genericName": "NONPROPRIETARYNAME",
+  "brand": "PROPRIETARYNAME",
+  "manufacturer": "LABELERNAME",
+  "composition": "SUBSTANCENAME + ACTIVE_NUMERATOR_STRENGTH",
+  "activeIngredients": "SUBSTANCENAME",
+  "strength": "ACTIVE_NUMERATOR_STRENGTH + ACTIVE_INGRED_UNIT",
+  "dosageForm": "DOSAGEFORMNAME",
+  "sourceIdentifier": "PRODUCTNDC",
+  "prescriptionRequired": "Parsed from PRODUCTTYPENAME"
+}

@@ -1,0 +1,19 @@
+[
+  { "categoryId": "health-must-haves", "name": "Health Must Haves", "slug": "health-must-haves", "type": "HEALTHCARE", "displayOrder": 1, "active": true },
+  { "categoryId": "diabetes-essentials", "name": "Diabetes Essentials", "slug": "diabetes-essentials", "type": "HEALTHCARE", "displayOrder": 2, "active": true },
+  { "categoryId": "personal-care", "name": "Personal Care", "slug": "personal-care", "type": "HEALTHCARE", "displayOrder": 3, "active": true },
+  { "categoryId": "vitamins-supplements", "name": "Vitamins & Supplements", "slug": "vitamins-supplements", "type": "HEALTHCARE", "displayOrder": 4, "active": true },
+  { "categoryId": "sexual-wellness", "name": "Sexual Wellness", "slug": "sexual-wellness", "type": "HEALTHCARE", "displayOrder": 5, "active": true },
+  { "categoryId": "sports-nutrition", "name": "Sports Nutrition", "slug": "sports-nutrition", "type": "HEALTHCARE", "displayOrder": 6, "active": true },
+  { "categoryId": "healthcare-devices", "name": "Healthcare Devices", "slug": "healthcare-devices", "type": "HEALTHCARE", "displayOrder": 7, "active": true },
+  { "categoryId": "pet-care", "name": "Pet Care", "slug": "pet-care", "type": "HEALTHCARE", "displayOrder": 8, "active": true },
+  { "categoryId": "health-food-drinks", "name": "Health Food and Drinks", "slug": "health-food-drinks", "type": "HEALTHCARE", "displayOrder": 9, "active": true },
+  { "categoryId": "homeopathy-care", "name": "Homeopathy Care", "slug": "homeopathy-care", "type": "HEALTHCARE", "displayOrder": 10, "active": true },
+  { "categoryId": "ayurvedic-care", "name": "Ayurvedic Care", "slug": "ayurvedic-care", "type": "HEALTHCARE", "displayOrder": 11, "active": true },
+  { "categoryId": "mother-baby-care", "name": "Mother and Baby Care", "slug": "mother-baby-care", "type": "HEALTHCARE", "displayOrder": 12, "active": true },
+  { "categoryId": "mobility-elderly-care", "name": "Mobility & Elderly Care", "slug": "mobility-elderly-care", "type": "HEALTHCARE", "displayOrder": 13, "active": true },
+  { "categoryId": "health-concern", "name": "Health Concern", "slug": "health-concern", "type": "HEALTHCARE", "displayOrder": 14, "active": true },
+  { "categoryId": "skin-care", "name": "Skin Care", "slug": "skin-care", "type": "HEALTHCARE", "displayOrder": 15, "active": true },
+  { "categoryId": "monsoon-store", "name": "Monsoon Store", "slug": "monsoon-store", "type": "HEALTHCARE", "displayOrder": 16, "active": true },
+  { "categoryId": "medicines", "name": "Medicines", "slug": "medicines", "type": "MEDICINE", "displayOrder": 0, "active": true }
+]

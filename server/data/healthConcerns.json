@@ -1,0 +1,10 @@
+[
+  { "name": "Diabetes", "slug": "diabetes" },
+  { "name": "Heart Health", "slug": "heart-health" },
+  { "name": "Fever", "slug": "fever" },
+  { "name": "Pain Relief", "slug": "pain-relief" },
+  { "name": "Digestive Health", "slug": "digestive-health" },
+  { "name": "Skin Care", "slug": "skin-care" },
+  { "name": "Bone & Joint", "slug": "bone-joint" },
+  { "name": "Sports & Fitness", "slug": "sports-fitness" }
+]
