@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Package, Tag, Users, ShoppingCart, 
-  FileText, Activity, AlertCircle, Settings, LogOut 
+  FileText, Activity, AlertCircle, Settings, LogOut, Stethoscope 
 } from 'lucide-react';
 import socket from '../utils/socket';
 
@@ -34,6 +34,7 @@ const AdminLayout = () => {
     { name: 'Prescriptions', path: '/admin/prescriptions', icon: <FileText size={20} /> },
     { name: 'Lab Tests', path: '/admin/lab-tests', icon: <Activity size={20} /> },
     { name: 'Customers', path: '/admin/customers', icon: <Users size={20} /> },
+    { name: 'Doctors', path: '/admin/doctors', icon: <Stethoscope size={20} /> },
     { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ];
 
@@ -113,3 +114,5 @@ const AdminLayout = () => {
 };
 
 export default AdminLayout;
+
+
