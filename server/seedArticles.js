@@ -1,4 +1,4 @@
-﻿const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const HealthArticle = require('./models/HealthArticle');
 const connectDB = require('./config/db');

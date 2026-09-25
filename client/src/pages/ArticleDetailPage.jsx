@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
 
@@ -11,7 +11,7 @@ const ArticleDetailPage = () => {
     const fetchArticle = async () => {
       try {
         setLoading(true);
-        const res = await api.get(\/api/articles/\\);
+        const res = await api.get(`/articles/${id}`);
         setArticle(res.data);
       } catch (err) {
         console.error('Failed to fetch article', err);
@@ -65,7 +65,7 @@ const ArticleDetailPage = () => {
           <h3 className="text-2xl font-bold mb-6">Related Articles</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {article.relatedArticles.map(related => (
-              <Link to={\/health-insights/\\} key={related._id} className="block group">
+              <Link to={/health-insights/} key={related._id} className="block group">
                 <div className="border rounded-lg overflow-hidden flex items-center p-4 hover:shadow-md transition">
                   {related.imageUrl && (
                     <img src={related.imageUrl} alt={related.title} className="w-24 h-24 object-cover rounded mr-4" />

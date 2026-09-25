@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../utils/api';
 
@@ -11,7 +11,7 @@ const HealthInsightsPage = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const url = category ? \/api/articles?category=\\ : '/api/articles';
+        const url = category ? `/articles?category=${category}` : '/articles';
         const res = await api.get(url);
         setArticles(res.data);
       } catch (err) {
@@ -31,7 +31,7 @@ const HealthInsightsPage = () => {
       
       <div className="flex justify-center space-x-4 mb-8">
         <button
-          className={\px-4 py-2 rounded-full \\}
+          className={`px-4 py-2 rounded-full ${category === '' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
           onClick={() => setCategory('')}
         >
           All
@@ -39,7 +39,7 @@ const HealthInsightsPage = () => {
         {categories.map(cat => (
           <button
             key={cat}
-            className={\px-4 py-2 rounded-full \\}
+            className={`px-4 py-2 rounded-full ${category === cat ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setCategory(cat)}
           >
             {cat}
@@ -63,7 +63,7 @@ const HealthInsightsPage = () => {
                 <p className="text-gray-600 mb-4 flex-grow">{article.excerpt}</p>
                 <div className="flex justify-between items-center mt-auto">
                   <span className="text-sm font-medium text-gray-900">{article.author}</span>
-                  <Link to={\/health-insights/\\} className="text-blue-600 hover:text-blue-800 font-medium">Read More &rarr;</Link>
+                  <Link to={/health-insights/} className="text-blue-600 hover:text-blue-800 font-medium">Read More &rarr;</Link>
                 </div>
               </div>
             </div>

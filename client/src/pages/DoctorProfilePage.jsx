@@ -123,7 +123,7 @@ const DoctorProfilePage = () => {
                     <div className="bg-white rounded-xl shadow-sm border p-6">
                         <h2 className="text-xl font-bold text-slate-800 mb-4">About Doctor</h2>
                         <p className="text-slate-600 leading-relaxed">
-                            {doctor.bio || Dr.  is a renowned  with over  years of experience in providing excellent patient care.}
+                            {doctor.bio || `Dr. ${doctor.name} is a renowned ${doctor.specialization} with over ${doctor.experience} years of experience in providing excellent patient care.`}
                         </p>
                     </div>
 
@@ -165,9 +165,8 @@ const DoctorProfilePage = () => {
                                     {generateTimeSlots().map(time => (
                                         <button
                                             key={time}
-                                            type="button"
                                             onClick={() => setSelectedTime(time)}
-                                            className={py-2 px-1 text-sm rounded border text-center transition-colors }
+                                            className={`py-2 px-1 text-sm rounded border text-center transition-colors ${selectedTime === time ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 hover:border-blue-600'}`}
                                         >
                                             {time}
                                         </button>

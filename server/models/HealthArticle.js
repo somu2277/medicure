@@ -1,4 +1,4 @@
-﻿const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 const healthArticleSchema = new mongoose.Schema({
   title: {
