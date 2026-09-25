@@ -12,6 +12,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProductPage from './pages/ProductPage';
+import LabTestsPage from './pages/LabTestsPage';
+import LabTestDetailPage from './pages/LabTestDetailPage';
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
             
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/lab-tests" element={<LabTestsPage />} />
+            <Route path="/lab-tests/:id" element={<LabTestDetailPage />} />
             
             {/* Catch-all for undefined customer routes */}
             <Route path="*" element={<PlaceholderPage />} />
