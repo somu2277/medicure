@@ -145,7 +145,7 @@ const Header = () => {
               Healthcare <ChevronDown size={14} className={isMegaMenuOpen ? 'text-primary' : 'text-slate-400'}/>
             </div>
             
-            <Link to="/consultation" className="hover:text-primary transition-colors cursor-pointer py-3">
+            <Link to="/doctors" className="hover:text-primary transition-colors cursor-pointer py-3">
               Doctor Consult
             </Link>
             

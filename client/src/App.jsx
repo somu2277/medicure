@@ -11,6 +11,8 @@ import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PlaceholderPage from './pages/PlaceholderPage';
+import DoctorsPage from './pages/DoctorsPage';
+import DoctorProfilePage from './pages/DoctorProfilePage';
 import ProductPage from './pages/ProductPage';
 import OrdersPage from './pages/OrdersPage';
 
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="/product/:id" element={<ProductPage />} />
             
             <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/doctors" element={<DoctorsPage />} />
+            <Route path="/doctors/:id" element={<DoctorProfilePage />} />
             
             {/* Catch-all for undefined customer routes */}
             <Route path="*" element={<PlaceholderPage />} />
