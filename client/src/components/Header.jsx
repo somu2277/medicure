@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Percent, ShoppingCart, ChevronRight, ChevronDown, LogOut } from 'lucide-react';
+import { User, Percent, ShoppingCart, ChevronRight, ChevronDown, LogOut, MapPin } from 'lucide-react';
 import useCartStore from '../store/cartStore';
 import useAuthStore from '../store/authStore';
+import useAddressStore from '../store/addressStore';
 import MegaMenu from './MegaMenu';
+import AddressModal from './AddressModal';
 
 const Header = () => {
   const { cartItems } = useCartStore();
   const { userInfo, logout } = useAuthStore();
+  const { selectedAddress, fetchAddresses, deliveryAvailable } = useAddressStore();
+  
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [notification, setNotification] = useState('');
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (userInfo) {
+      fetchAddresses();
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     if (!userInfo) return;
@@ -34,6 +45,10 @@ const Header = () => {
     });
   }, [userInfo]);
 
+  const displayLocation = userInfo && selectedAddress 
+    ? `${selectedAddress.pincode}, ${selectedAddress.city}`
+    : 'Select Location';
+
   return (
     <header className="bg-white sticky top-0 z-50 relative">
       {/* Top Header Row */}
@@ -54,10 +69,17 @@ const Header = () => {
           <div className="hidden md:block h-8 w-px bg-slate-300"></div>
 
           {/* Deliver To */}
-          <div className="hidden md:flex flex-col cursor-pointer">
+          <div 
+            className="hidden md:flex flex-col cursor-pointer group"
+            onClick={() => setIsAddressModalOpen(true)}
+            title="Choose delivery address"
+          >
             <span className="text-[11px] text-slate-500 leading-tight">Delivery to</span>
-            <span className="text-sm font-bold text-slate-700 flex items-center gap-1 leading-tight">
-              Select Location <ChevronRight size={14} className="text-slate-500 mt-0.5"/>
+            <span className="text-sm font-bold text-slate-700 flex items-center gap-1 leading-tight group-hover:text-primary transition-colors">
+                <>
+                  <span className="truncate max-w-[150px]">{displayLocation}</span> 
+                  <ChevronRight size={14} className="text-slate-500 mt-0.5 group-hover:text-primary"/>
+                </>
             </span>
           </div>
         </div>
@@ -67,10 +89,10 @@ const Header = () => {
           
           {userInfo ? (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-slate-700 cursor-pointer">
+              <Link to="/orders" className="flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
                 <User size={22} className="text-slate-600" />
                 <span className="hidden md:block text-sm font-medium truncate max-w-[100px]">Hello, {userInfo.name.split(' ')[0]}</span>
-              </div>
+              </Link>
               <button onClick={logout} className="text-slate-500 hover:text-red-500 transition-colors" title="Logout">
                 <LogOut size={18} />
               </button>
@@ -160,6 +182,9 @@ const Header = () => {
           🔔 {notification}
         </div>
       )}
+
+      {/* Delivery Address Modal */}
+      <AddressModal isOpen={isAddressModalOpen} onClose={() => setIsAddressModalOpen(false)} />
     </header>
   );
 };

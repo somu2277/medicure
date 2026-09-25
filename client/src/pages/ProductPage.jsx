@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
 import socket from '../utils/socket';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MapPin, CheckCircle } from 'lucide-react';
+import useAddressStore from '../store/addressStore';
 
 const ProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [socketStatus, setSocketStatus] = useState('Offline');
+  const { selectedAddress, deliveryAvailable, deliveryEstimate } = useAddressStore();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -95,16 +97,37 @@ const ProductPage = () => {
             )}
           </div>
 
-          <div className="mb-8">
+          <div className="mb-6">
             <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-semibold ${product.stockQuantity > 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
               <span className={`w-1.5 h-1.5 rounded-full ${product.stockQuantity > 0 ? 'bg-emerald-500' : 'bg-rose-500'}`}></span>
               {product.stockQuantity > 0 ? `${product.stockQuantity} in stock` : 'Out of Stock'}
             </span>
           </div>
 
+          {/* Delivery Availability Block */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8">
+            <div className="flex items-start gap-3">
+              <MapPin size={20} className="text-slate-400 mt-0.5" />
+              <div>
+                <p className="text-sm font-medium text-slate-700">
+                  Deliver to {selectedAddress ? <span className="font-bold">{selectedAddress.pincode}</span> : 'Select a location in navbar'}
+                </p>
+                {selectedAddress && (
+                  <div className={`mt-1 text-sm font-semibold flex items-center gap-1 ${deliveryAvailable ? 'text-success' : 'text-error'}`}>
+                    {deliveryAvailable ? (
+                      <><CheckCircle size={14} /> Delivery by {deliveryEstimate}</>
+                    ) : (
+                      '⚠ Not deliverable to this pincode'
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
           <div className="flex gap-4 mb-8">
             <button 
-              disabled={product.stockQuantity <= 0}
+              disabled={product.stockQuantity <= 0 || deliveryAvailable === false}
               className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl shadow-sm transition-all active:scale-[0.98]"
             >
               Add To Cart

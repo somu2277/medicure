@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, Plus, Minus, FileText, ChevronRight } from 'lucide-react';
+import { Trash2, Plus, Minus, FileText, ChevronRight, MapPin, CheckCircle } from 'lucide-react';
 import useCartStore from '../store/cartStore';
+import useAddressStore from '../store/addressStore';
+import AddressModal from '../components/AddressModal';
 
 const CartPage = () => {
   const navigate = useNavigate();
   const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCartStore();
+  const { selectedAddress, deliveryAvailable, deliveryEstimate } = useAddressStore();
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  
   const { mrpTotal, subtotal, discount, requiresPrescription } = getCartTotal();
   const deliveryFee = subtotal > 500 ? 0 : 40;
   const totalAmount = subtotal + deliveryFee;
@@ -33,6 +38,42 @@ const CartPage = () => {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Column - Cart Items */}
           <div className="flex-grow lg:w-2/3">
+            
+            {/* Delivery Location Block */}
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6 flex justify-between items-center">
+                <div className="flex items-start gap-3">
+                    <MapPin size={24} className="text-primary pt-1 flex-shrink-0" />
+                    <div>
+                        <p className="text-sm text-slate-500 font-medium">Deliver to:</p>
+                        {selectedAddress ? (
+                            <p className="text-slate-800 font-bold">
+                                {selectedAddress.fullName}, {selectedAddress.pincode}
+                                <span className="block text-xs font-normal text-slate-500 truncate max-w-sm">
+                                    {selectedAddress.house}, {selectedAddress.locality}
+                                </span>
+                            </p>
+                        ) : (
+                            <p className="text-slate-800 font-bold">Select a delivery location</p>
+                        )}
+                        {selectedAddress && deliveryAvailable !== null && (
+                           <div className={`mt-1 text-xs font-semibold flex items-center gap-1 ${deliveryAvailable ? 'text-success' : 'text-error'}`}>
+                              {deliveryAvailable ? (
+                                  <><CheckCircle size={12} /> Delivery by {deliveryEstimate}</>
+                              ) : (
+                                  '⚠ Not deliverable to this pincode'
+                              )}
+                           </div>
+                        )}
+                    </div>
+                </div>
+                <button 
+                    onClick={() => setIsAddressModalOpen(true)}
+                    className="text-primary font-medium hover:underline text-sm px-3 py-1.5 border border-primary/20 rounded-lg hover:bg-primary/5 transition-colors"
+                >
+                    Change
+                </button>
+            </div>
+
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
               <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <span className="font-semibold text-slate-700">Items in Cart ({cartItems.length})</span>
@@ -149,7 +190,8 @@ const CartPage = () => {
               
               <button 
                 onClick={() => navigate('/checkout')}
-                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-between"
+                disabled={!selectedAddress || deliveryAvailable === false}
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>Proceed to Checkout</span>
                 <ChevronRight size={20} />
@@ -158,6 +200,9 @@ const CartPage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Delivery Address Modal */}
+      <AddressModal isOpen={isAddressModalOpen} onClose={() => setIsAddressModalOpen(false)} />
     </div>
   );
 };

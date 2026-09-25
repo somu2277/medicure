@@ -198,16 +198,23 @@ exports.sendOtp = async (req, res) => {
 
         const message = `Your MediCare verification code is: ${otp}\n\nThis code is valid for 10 minutes.`;
 
-        await sendEmail({
-            email: user.email,
-            subject: 'Your MediCare Login Code',
-            message
-        });
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: 'Your MediCare Login Code',
+                message
+            });
+            res.status(200).json({ success: true, message: 'OTP sent to email' });
+        } catch (emailError) {
+            console.error('SMTP Error:', emailError.message);
+            // Fallback for development if SMTP fails
+            console.log(`\n======================================\n🚀 DEVELOPMENT MODE: OTP for ${email} is: ${otp}\n======================================\n`);
+            res.status(200).json({ success: true, message: 'OTP sent (Check terminal output)' });
+        }
 
-        res.status(200).json({ success: true, message: 'OTP sent to email' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Could not send OTP email' });
+        res.status(500).json({ success: false, message: 'Server error while generating OTP' });
     }
 };
 

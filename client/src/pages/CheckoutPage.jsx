@@ -1,28 +1,36 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, FileText, CreditCard, CheckCircle, Upload, Loader2 } from 'lucide-react';
+import { MapPin, FileText, CreditCard, CheckCircle, Upload, Loader2, Home, Briefcase, Map } from 'lucide-react';
 import useCartStore from '../store/cartStore';
+import useAddressStore from '../store/addressStore';
 import api from '../utils/api';
+import AddressModal from '../components/AddressModal';
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const { cartItems, getCartTotal, clearCart } = useCartStore();
+  const { selectedAddress, deliveryAvailable } = useAddressStore();
+  
   const { mrpTotal, subtotal, discount, requiresPrescription } = getCartTotal();
   const deliveryFee = subtotal > 500 ? 0 : 40;
   const totalAmount = subtotal + deliveryFee;
 
   const [step, setStep] = useState(1);
-  const [address, setAddress] = useState({ name: '', line: '', pin: '' });
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [prescriptionStatus, setPrescriptionStatus] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
-
-  // If cart is empty and order is not placed, redirect
-  if (cartItems.length === 0 && !orderPlaced) {
-    navigate('/cart');
-    return null;
-  }
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // If cart is empty and order is not placed, redirect safely via useEffect
+  React.useEffect(() => {
+    if (cartItems.length === 0 && !orderPlaced) {
+      navigate('/cart');
+    }
+  }, [cartItems.length, orderPlaced, navigate]);
+
+  if (cartItems.length === 0 && !orderPlaced) {
+    return null; // Return null while redirecting
+  }
 
   const handlePlaceOrder = async () => {
     try {
@@ -37,12 +45,12 @@ const CheckoutPage = () => {
           price: item.sellingPrice,
           subtotal: item.sellingPrice * item.qty
         })),
-        address: {
-          addressLine: address.line,
-          city: 'Demo City', // In a full app, capture city/state
-          state: 'Demo State',
-          pincode: address.pin
-        },
+        address: selectedAddress ? {
+          addressLine: `${selectedAddress.house}, ${selectedAddress.locality}`,
+          city: selectedAddress.city,
+          state: selectedAddress.state,
+          pincode: selectedAddress.pincode
+        } : null,
         subtotal,
         discount,
         deliveryFee,
@@ -104,36 +112,75 @@ const CheckoutPage = () => {
                 </div>
                 <div className="flex-grow">
                   <h2 className={`text-lg font-bold ${step === 1 ? 'text-primary' : 'text-slate-800'}`}>Delivery Address</h2>
-                  {step > 1 && <p className="text-sm text-slate-500 mt-1">{address.name}, {address.line}, {address.pin}</p>}
+                  {step > 1 && selectedAddress && <p className="text-sm text-slate-500 mt-1">{selectedAddress.fullName}, {selectedAddress.city} - {selectedAddress.pincode}</p>}
                 </div>
               </div>
               
               {step === 1 && (
                 <div className="p-4 sm:p-6 border-t border-slate-100">
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
-                      <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-1 focus:ring-primary focus:border-primary outline-none" value={address.name} onChange={e => setAddress({...address, name: e.target.value})} placeholder="John Doe" />
+                  {selectedAddress ? (
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-xl border-2 border-primary bg-blue-50/30">
+                        <div className="flex items-start gap-3">
+                            <div className="pt-1 text-primary">
+                                {selectedAddress.addressType === 'Home' ? <Home size={20} /> : selectedAddress.addressType === 'Work' ? <Briefcase size={20} /> : <Map size={20} />}
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex items-center justify-between mb-1">
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-bold text-slate-800">{selectedAddress.fullName}</span>
+                                        <span className="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded-full font-medium">
+                                            {selectedAddress.addressType}
+                                        </span>
+                                    </div>
+                                    <button 
+                                      onClick={() => setIsAddressModalOpen(true)}
+                                      className="text-primary font-medium text-sm hover:underline"
+                                    >
+                                      Change
+                                    </button>
+                                </div>
+                                <p className="text-sm text-slate-600 mb-1">
+                                    {selectedAddress.house}, {selectedAddress.locality}<br/>
+                                    {selectedAddress.city}, {selectedAddress.state} - {selectedAddress.pincode}
+                                </p>
+                                <p className="text-sm text-slate-600">Mobile: <span className="font-medium">{selectedAddress.phone}</span></p>
+                            </div>
+                        </div>
+                      </div>
+                      
+                      {!deliveryAvailable && deliveryAvailable !== null && (
+                        <div className="p-3 bg-red-50 text-red-600 rounded-lg text-sm flex items-start gap-2">
+                          <CheckCircle size={16} className="mt-0.5 flex-shrink-0" />
+                          <span>Delivery is not available to this pincode. Please select a different address.</span>
+                        </div>
+                      )}
+                      
+                      <button 
+                        onClick={() => {
+                          if (selectedAddress && deliveryAvailable !== false) {
+                            setStep(requiresPrescription ? 2 : 3);
+                          }
+                        }}
+                        disabled={!selectedAddress || deliveryAvailable === false}
+                        className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-colors mt-2 disabled:opacity-50"
+                      >
+                        Deliver Here & Continue
+                      </button>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Address Line</label>
-                      <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-1 focus:ring-primary focus:border-primary outline-none" value={address.line} onChange={e => setAddress({...address, line: e.target.value})} placeholder="123 Main St, Apartment 4B" />
+                  ) : (
+                    <div className="text-center py-8">
+                      <MapPin size={48} className="mx-auto text-slate-300 mb-4" />
+                      <h3 className="text-lg font-bold text-slate-800 mb-2">No Delivery Address</h3>
+                      <p className="text-slate-500 mb-6">Please select or add a new delivery address to continue checkout.</p>
+                      <button 
+                        onClick={() => setIsAddressModalOpen(true)}
+                        className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-colors"
+                      >
+                        Add Delivery Address
+                      </button>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Pincode</label>
-                      <input type="text" className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:ring-1 focus:ring-primary focus:border-primary outline-none" value={address.pin} onChange={e => setAddress({...address, pin: e.target.value})} placeholder="400001" />
-                    </div>
-                    <button 
-                      onClick={() => {
-                        if (address.name && address.line && address.pin) {
-                          setStep(requiresPrescription ? 2 : 3);
-                        }
-                      }}
-                      className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-colors mt-2"
-                    >
-                      Save & Continue
-                    </button>
-                  </div>
+                  )}
                 </div>
               )}
             </div>
@@ -248,6 +295,7 @@ const CheckoutPage = () => {
           
         </div>
       </div>
+      <AddressModal isOpen={isAddressModalOpen} onClose={() => setIsAddressModalOpen(false)} />
     </div>
   );
 };

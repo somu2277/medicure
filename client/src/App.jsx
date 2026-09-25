@@ -12,6 +12,7 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProductPage from './pages/ProductPage';
+import OrdersPage from './pages/OrdersPage';
 
 const App = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => {
             
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            
+            <Route path="/orders" element={<OrdersPage />} />
             
             {/* Catch-all for undefined customer routes */}
             <Route path="*" element={<PlaceholderPage />} />

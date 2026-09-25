@@ -52,4 +52,25 @@ const getCustomers = async (req, res) => {
     }
 };
 
-module.exports = { getDashboardStats, getCustomers };
+// @desc    Get Customer Details with Order History
+// @route   GET /api/admin/customers/:id
+// @access  Private/Admin
+const getCustomerDetails = async (req, res) => {
+    try {
+        const customer = await User.findById(req.params.id).select('-passwordHash -otp -resetPasswordToken');
+        if (!customer) {
+            return res.status(404).json({ success: false, message: 'Customer not found' });
+        }
+
+        const orders = await Order.find({ userId: req.params.id })
+            .sort({ createdAt: -1 })
+            .populate('items.productId', 'name images price');
+
+        res.json({ success: true, customer, orders });
+    } catch (error) {
+        console.error('Fetch Customer Details Error:', error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+module.exports = { getDashboardStats, getCustomers, getCustomerDetails };

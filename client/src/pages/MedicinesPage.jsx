@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
-import { Filter, SlidersHorizontal, Loader2 } from 'lucide-react';
+import { Filter, SlidersHorizontal, Loader2, MapPin } from 'lucide-react';
 import api from '../utils/api';
+import useAddressStore from '../store/addressStore';
 
 const MedicinesPage = () => {
   const [medicines, setMedicines] = useState([]);
@@ -14,6 +15,7 @@ const MedicinesPage = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [prescriptionFilter, setPrescriptionFilter] = useState('all'); // 'all', 'rx', 'otc'
   const [sortBy, setSortBy] = useState('Relevance');
+  const { selectedAddress } = useAddressStore();
 
   useEffect(() => {
     const fetchMedicinesAndCategories = async () => {
@@ -76,9 +78,19 @@ const MedicinesPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumb & Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800">All Medicines</h1>
-        <p className="text-slate-500 text-sm mt-1">Showing {filteredMedicines.length} products</p>
+      <div className="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800">All Medicines</h1>
+          <p className="text-slate-500 text-sm mt-1">Showing {filteredMedicines.length} products</p>
+        </div>
+        
+        {/* Delivery Location Badge */}
+        {selectedAddress && (
+          <div className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-100">
+            <MapPin size={16} />
+            Deliverable to {selectedAddress.pincode}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
