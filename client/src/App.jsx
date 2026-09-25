@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -12,6 +12,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProductPage from './pages/ProductPage';
+import HealthInsightsPage from './pages/HealthInsightsPage';
+import ArticleDetailPage from './pages/ArticleDetailPage';
 
 const App = () => {
   return (
