@@ -6,10 +6,15 @@ const AdminCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Modal State
+  // Category Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   const [formData, setFormData] = useState({ name: '', slug: '' });
+  
+  // Subcategory Modal State
+  const [isSubModalOpen, setIsSubModalOpen] = useState(false);
+  const [activeCategoryId, setActiveCategoryId] = useState(null);
+  const [subFormData, setSubFormData] = useState({ name: '', slug: '' });
   
   // Search state
   const [searchTerm, setSearchTerm] = useState('');
@@ -47,6 +52,18 @@ const AdminCategories = () => {
     setFormData({ name: '', slug: '' });
   };
 
+  const openSubModal = (categoryId) => {
+    setActiveCategoryId(categoryId);
+    setSubFormData({ name: '', slug: '' });
+    setIsSubModalOpen(true);
+  };
+
+  const closeSubModal = () => {
+    setIsSubModalOpen(false);
+    setActiveCategoryId(null);
+    setSubFormData({ name: '', slug: '' });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -59,6 +76,18 @@ const AdminCategories = () => {
       fetchCategories();
     } catch (err) {
       alert('Failed to save category');
+      console.error(err);
+    }
+  };
+
+  const handleSubSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await api.post(`/categories/${activeCategoryId}/subcategories`, subFormData);
+      closeSubModal();
+      fetchCategories();
+    } catch (err) {
+      alert('Failed to save subcategory');
       console.error(err);
     }
   };
@@ -121,6 +150,12 @@ const AdminCategories = () => {
                       {sub.name}
                     </span>
                   ))}
+                  <button 
+                    onClick={() => openSubModal(cat._id)}
+                    className="px-2 py-1 bg-teal-50 text-teal-600 border border-teal-200 rounded text-xs font-bold hover:bg-teal-100 transition-colors"
+                  >
+                    + Add
+                  </button>
                 </div>
               </div>
             </div>
@@ -161,6 +196,46 @@ const AdminCategories = () => {
                 <button type="button" onClick={closeModal} className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
                 <button type="submit" className="px-4 py-2 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-lg">
                   {editData ? 'Save Changes' : 'Create Category'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isSubModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl p-6 max-w-md w-full shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Add Subcategory</h2>
+              <button onClick={closeSubModal} className="text-slate-400 hover:text-slate-600"><X size={20}/></button>
+            </div>
+            <form onSubmit={handleSubSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                <input 
+                  required
+                  type="text" 
+                  value={subFormData.name}
+                  onChange={(e) => setSubFormData({...subFormData, name: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500" 
+                  placeholder="e.g. Daily Wellness"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Slug (optional)</label>
+                <input 
+                  type="text" 
+                  value={subFormData.slug}
+                  onChange={(e) => setSubFormData({...subFormData, slug: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500" 
+                  placeholder="e.g. daily-wellness"
+                />
+              </div>
+              <div className="flex justify-end gap-3 mt-6">
+                <button type="button" onClick={closeSubModal} className="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
+                <button type="submit" className="px-4 py-2 text-sm font-semibold text-white bg-teal-600 hover:bg-teal-700 rounded-lg">
+                  Create Subcategory
                 </button>
               </div>
             </form>

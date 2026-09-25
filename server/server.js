@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
     console.log('Client connected:', socket.id);
     
     socket.on('join_user_room', (userId) => {
-        socket.join(user_);
+        socket.join('user_' + userId);
     });
     
     socket.on('join_admin_room', () => {
@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
 
     // WebRTC Signaling
     socket.on('join-room', (roomId, userId) => {
-        console.log(User  joining room );
+        console.log(`User joining room: ${roomId}`);
         socket.join(roomId);
         socket.to(roomId).emit('user-connected', userId);
 
@@ -63,6 +63,6 @@ app.set('io', io);
 
 connectDB().then(() => {
     server.listen(PORT, () => {
-        console.log(Server running in  mode on port );
+        console.log(`Server running in mode on port ${PORT}`);
     });
 });

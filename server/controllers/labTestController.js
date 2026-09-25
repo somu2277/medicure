@@ -31,3 +31,29 @@ exports.createLabTest = async (req, res) => {
     res.status(400).json({ message: 'Invalid test data' });
   }
 };
+
+exports.updateLabTest = async (req, res) => {
+  try {
+    const test = await LabTest.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (test) {
+      res.json(test);
+    } else {
+      res.status(404).json({ message: 'Test not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: 'Invalid test data' });
+  }
+};
+
+exports.deleteLabTest = async (req, res) => {
+  try {
+    const test = await LabTest.findByIdAndDelete(req.params.id);
+    if (test) {
+      res.json({ message: 'Test removed' });
+    } else {
+      res.status(404).json({ message: 'Test not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
