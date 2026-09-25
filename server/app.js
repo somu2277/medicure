@@ -26,6 +26,7 @@ app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/addresses', require('./routes/addressRoutes'));
 app.use('/api/doctors', require('./routes/doctorRoutes'));
+app.use('/api/admin/doctors', require('./routes/adminDoctorRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
 app.use('/api/lab-tests', require('./routes/labTestRoutes'));
 app.use('/api/lab-bookings', require('./routes/labBookingRoutes'));

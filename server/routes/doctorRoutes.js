@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const doctorController = require('../controllers/doctorController');
-// const { protect, authorize } = require('../middleware/auth'); // If auth is implemented
 
-router.get('/', doctorController.getDoctors);
-router.get('/:id', doctorController.getDoctorById);
-router.post('/', doctorController.createDoctor);
-router.put('/:id', doctorController.updateDoctor);
+router.get('/:id/dashboard', doctorController.getDashboard);
+router.put('/:id/availability', doctorController.updateAvailability);
+router.get('/:id/appointments', doctorController.getAppointments);
+router.post('/appointments/:appointmentId/generate-room', doctorController.generateRoomId);
 
 module.exports = router;

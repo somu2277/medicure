@@ -5,6 +5,10 @@ const doctorSchema = new mongoose.Schema({
     specialization: { type: String, required: true },
     qualifications: { type: [String], required: true },
     experienceYears: { type: Number, required: true },
+    medicalRegistrationNumber: { type: String, required: true, unique: true },
+    languagesSpoken: { type: [String], default: [] },
+    isVerified: { type: Boolean, default: false },
+    verificationDocuments: [{ type: String }],
     bio: { type: String },
     consultationFee: { type: Number, required: true },
     availability: [{

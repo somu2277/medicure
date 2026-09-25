@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const adminDoctorController = require('../controllers/adminDoctorController');
+
+router.get('/', adminDoctorController.getAllDoctors);
+router.get('/:id', adminDoctorController.getDoctorById);
+router.put('/:id/verify', adminDoctorController.verifyDoctor);
+router.delete('/:id', adminDoctorController.deleteDoctor);
+
+module.exports = router;

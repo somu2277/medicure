@@ -11,7 +11,7 @@ const server = http.createServer(app);
 // Setup Socket.io
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:5173', 'http://localhost:5174'], // Customer & Admin
+        origin: '*',
         methods: ['GET', 'POST', 'PATCH', 'DELETE']
     }
 });
@@ -19,14 +19,39 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log('Client connected:', socket.id);
     
-    // User joins their personal room
     socket.on('join_user_room', (userId) => {
-        socket.join(`user_${userId}`);
+        socket.join(user_);
     });
     
-    // Admins join admin room
     socket.on('join_admin_room', () => {
         socket.join('admin_room');
+    });
+
+    // WebRTC Signaling
+    socket.on('join-room', (roomId, userId) => {
+        console.log(User  joining room );
+        socket.join(roomId);
+        socket.to(roomId).emit('user-connected', userId);
+
+        socket.on('disconnect', () => {
+            socket.to(roomId).emit('user-disconnected', userId);
+        });
+    });
+
+    socket.on('offer', (payload) => {
+        io.to(payload.target).emit('offer', payload);
+    });
+
+    socket.on('answer', (payload) => {
+        io.to(payload.target).emit('answer', payload);
+    });
+
+    socket.on('ice-candidate', (incoming) => {
+        io.to(incoming.target).emit('ice-candidate', incoming.candidate);
+    });
+    
+    socket.on('end-call', (roomId) => {
+        socket.to(roomId).emit('call-ended');
     });
 
     socket.on('disconnect', () => {
@@ -34,12 +59,10 @@ io.on('connection', (socket) => {
     });
 });
 
-// Make io accessible globally if needed, or pass to controllers via req
 app.set('io', io);
 
-// Connect to DB and start server
 connectDB().then(() => {
     server.listen(PORT, () => {
-        console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+        console.log(Server running in  mode on port );
     });
 });
