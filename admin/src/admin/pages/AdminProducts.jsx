@@ -6,6 +6,12 @@ import api from '../../utils/api';
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredProducts = products.filter(p => 
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (p.brand && p.brand.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   useEffect(() => {
     fetchProducts();
@@ -49,6 +55,8 @@ const AdminProducts = () => {
           <input 
             type="text" 
             placeholder="Search products..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
           />
         </div>
@@ -79,12 +87,12 @@ const AdminProducts = () => {
                 <tr>
                   <td colSpan="6" className="px-6 py-8 text-center text-slate-500">Loading products...</td>
                 </tr>
-              ) : products.length === 0 ? (
+              ) : filteredProducts.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-8 text-center text-slate-500">No products found. Add your first medicine.</td>
+                  <td colSpan="6" className="px-6 py-8 text-center text-slate-500">No products found.</td>
                 </tr>
               ) : (
-                products.map((product) => (
+                filteredProducts.map((product) => (
                   <tr key={product._id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -116,9 +124,9 @@ const AdminProducts = () => {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit">
+                        <Link to={`/admin/products/edit/${product._id}`} className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit">
                           <Edit2 size={16} />
-                        </button>
+                        </Link>
                         <button 
                           onClick={() => {
                             if (window.confirm('Are you sure you want to delete this product?')) {

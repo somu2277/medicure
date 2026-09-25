@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
 import { Filter, SlidersHorizontal, Loader2, MapPin } from 'lucide-react';
 import api from '../utils/api';
@@ -11,7 +12,8 @@ const MedicinesPage = () => {
   const [error, setError] = useState(null);
 
   // Filters State
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [prescriptionFilter, setPrescriptionFilter] = useState('all'); // 'all', 'rx', 'otc'
   const [sortBy, setSortBy] = useState('Relevance');

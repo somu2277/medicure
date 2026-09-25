@@ -20,14 +20,14 @@ const OrdersPage = () => {
         // Fetch all user data in parallel
         const [ordersRes, apptRes, labRes] = await Promise.all([
           api.get('/orders').catch(() => ({ data: { orders: [] } })),
-          api.get('/appointments').catch(() => ({ data: { appointments: [] } })),
+          api.get('/appointments').catch(() => ({ data: [] })),
           api.get('/lab-bookings').catch(() => ({ data: { bookings: [] } }))
         ]);
         
         setData({
-          orders: ordersRes.data.orders || [],
-          appointments: apptRes.data.appointments || [],
-          labBookings: labRes.data.bookings || []
+          orders: ordersRes.data.orders || ordersRes.data || [],
+          appointments: apptRes.data.appointments || (Array.isArray(apptRes.data) ? apptRes.data : []),
+          labBookings: labRes.data.bookings || labRes.data || []
         });
       } catch (err) {
         console.error('Failed to fetch dashboard data:', err);
@@ -111,7 +111,7 @@ const OrdersPage = () => {
                   <div className="bg-slate-50 p-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
                     <div>
                       <span className="text-xs text-slate-500 font-medium">ORDER ID</span>
-                      <p className="text-sm font-bold text-slate-800">#{order._id.slice(-8).toUpperCase()}</p>
+                      <p className="text-sm font-bold text-slate-800">#{order.orderId || order._id.slice(-8).toUpperCase()}</p>
                     </div>
                     <div>
                       <span className="text-xs text-slate-500 font-medium">PLACED ON</span>
@@ -135,7 +135,9 @@ const OrdersPage = () => {
                       <div className="space-y-3 mt-4">
                         {order.items?.map((item, idx) => (
                           <div key={idx} className="flex gap-3 items-start">
-                            <div className="w-10 h-10 bg-slate-100 rounded flex-shrink-0"></div>
+                            <div className="w-10 h-10 bg-slate-100 rounded flex-shrink-0 flex items-center justify-center">
+                              <Package size={20} className="text-slate-400" />
+                            </div>
                             <div>
                               <p className="font-semibold text-slate-800 text-sm">{item.name}</p>
                               <p className="text-xs text-slate-500">Qty: {item.quantity}</p>
@@ -143,6 +145,11 @@ const OrdersPage = () => {
                           </div>
                         ))}
                       </div>
+                    </div>
+                    <div className="mt-4 md:mt-0 flex items-center justify-end w-full md:w-auto">
+                      <Link to={`/order/${order._id}`} className="bg-teal-50 text-teal-700 hover:bg-teal-100 font-semibold py-2 px-6 rounded-lg transition-colors border border-teal-200">
+                        View Order
+                      </Link>
                     </div>
                   </div>
                 </div>

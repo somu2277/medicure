@@ -4,7 +4,8 @@ import { ShoppingCart } from 'lucide-react';
 import useCartStore from '../store/cartStore';
 
 const ProductCard = ({ product }) => {
-  const addToCart = useCartStore((state) => state.addToCart);
+  const { cartItems, addToCart, updateQuantity, removeFromCart } = useCartStore();
+  const cartItem = cartItems.find(item => item._id === product._id);
 
   return (
     <div className="bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group flex flex-col h-full">
@@ -42,13 +43,47 @@ const ProductCard = ({ product }) => {
           )}
         </div>
         
-        <button 
-          onClick={() => addToCart(product)}
-          className="w-full mt-auto flex items-center justify-center gap-2 bg-primary/10 text-primary hover:bg-primary hover:text-white font-medium py-1.5 md:py-2 px-4 rounded transition-colors text-sm"
-        >
-          <ShoppingCart size={16} />
-          Add to Cart
-        </button>
+        {cartItem ? (
+          <div className="w-full mt-auto flex items-center justify-between bg-white border border-primary text-primary font-medium py-1 md:py-1.5 rounded text-sm overflow-hidden">
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (cartItem.qty <= 1) removeFromCart(product._id);
+                else updateQuantity(product._id, cartItem.qty - 1);
+              }}
+              className="px-4 py-1 hover:bg-primary/10 transition-colors h-full"
+            >
+              −
+            </button>
+            <span className="font-bold">{cartItem.qty}</span>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (cartItem.qty < (product.stock || 99)) {
+                  updateQuantity(product._id, cartItem.qty + 1);
+                }
+              }}
+              className="px-4 py-1 hover:bg-primary/10 transition-colors h-full"
+            >
+              +
+            </button>
+          </div>
+        ) : (
+          <button 
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              addToCart(product);
+            }}
+            disabled={product.stock === 0}
+            className="w-full mt-auto flex items-center justify-center gap-2 bg-primary/10 text-primary hover:bg-primary hover:text-white font-medium py-1.5 md:py-2 px-4 rounded transition-colors text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ShoppingCart size={16} />
+            {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+          </button>
+        )}
       </div>
     </div>
   );

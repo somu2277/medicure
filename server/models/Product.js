@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
   genericName: { type: String },
   brand: { type: String, required: true },
   manufacturer: { type: String },
-  sku: { type: String, unique: true },
+  sku: { type: String, unique: true, sparse: true },
   barcode: { type: String },
   
   // Classification
@@ -87,13 +87,12 @@ const productSchema = new mongoose.Schema({
 });
 
 // Middleware to calculate discount and available quantity before saving
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function() {
   if (this.mrp && this.sellingPrice) {
     this.discountPercentage = Math.round(((this.mrp - this.sellingPrice) / this.mrp) * 100);
   }
   
   this.availableQuantity = this.stockQuantity - this.reservedQuantity;
-  next();
 });
 
 const Product = mongoose.model('Product', productSchema);

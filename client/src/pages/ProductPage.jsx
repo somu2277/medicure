@@ -4,6 +4,7 @@ import api from '../utils/api';
 import socket from '../utils/socket';
 import { ChevronRight, MapPin, CheckCircle } from 'lucide-react';
 import useAddressStore from '../store/addressStore';
+import useCartStore from '../store/cartStore';
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -11,6 +12,9 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [socketStatus, setSocketStatus] = useState('Offline');
   const { selectedAddress, deliveryAvailable, deliveryEstimate } = useAddressStore();
+  
+  const { cartItems, addToCart, updateQuantity, removeFromCart } = useCartStore();
+  const cartItem = product ? cartItems.find(item => item._id === product._id) : null;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -126,12 +130,39 @@ const ProductPage = () => {
           </div>
 
           <div className="flex gap-4 mb-8">
-            <button 
-              disabled={product.stockQuantity <= 0 || deliveryAvailable === false}
-              className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl shadow-sm transition-all active:scale-[0.98]"
-            >
-              Add To Cart
-            </button>
+            {cartItem ? (
+                <div className="flex-1 flex items-center justify-between bg-white border-2 border-teal-600 text-teal-700 font-bold py-2 rounded-xl text-lg overflow-hidden">
+                  <button 
+                    onClick={() => {
+                      if (cartItem.qty <= 1) removeFromCart(product._id);
+                      else updateQuantity(product._id, cartItem.qty - 1);
+                    }}
+                    className="px-8 py-2 hover:bg-teal-50 transition-colors h-full"
+                  >
+                    −
+                  </button>
+                  <span className="text-xl">{cartItem.qty}</span>
+                  <button 
+                    onClick={() => {
+                      if (cartItem.qty < (product.stockQuantity || 99)) {
+                        updateQuantity(product._id, cartItem.qty + 1);
+                      }
+                    }}
+                    className="px-8 py-2 hover:bg-teal-50 transition-colors h-full"
+                  >
+                    +
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => addToCart(product)}
+                  disabled={product.stockQuantity <= 0 || deliveryAvailable === false}
+                  className="flex-1 bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl shadow-sm transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                >
+                  <ShoppingCart size={20} />
+                  {product.stockQuantity <= 0 ? 'Out of Stock' : 'Add To Cart'}
+                </button>
+              )}
           </div>
 
           <div>

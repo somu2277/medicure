@@ -9,7 +9,7 @@ const {
 const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 
 router.route('/')
-    .post(createOrder)
+    .post(protect, createOrder)
     .get(protect, getOrders);
 
 router.route('/:id')

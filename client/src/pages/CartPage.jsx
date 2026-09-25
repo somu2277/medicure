@@ -24,7 +24,7 @@ const CartPage = () => {
         <h2 className="text-2xl font-bold text-slate-800 mb-2">Your Cart is Empty!</h2>
         <p className="text-slate-500 mb-8">We have wide range of medicines and healthcare products.</p>
         <Link to="/medicines" className="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-8 rounded-lg shadow-sm transition-colors">
-          Explore Medicines
+          Continue Shopping
         </Link>
       </div>
     );
@@ -188,6 +188,12 @@ const CartPage = () => {
                 )}
               </div>
               
+              <button 
+                onClick={() => navigate('/medicines')}
+                className="w-full bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 rounded-lg shadow-sm transition-colors text-center mb-3"
+              >
+                Continue Shopping
+              </button>
               <button 
                 onClick={() => navigate('/checkout')}
                 disabled={!selectedAddress || deliveryAvailable === false}

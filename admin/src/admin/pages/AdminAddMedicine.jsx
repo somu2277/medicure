@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save } from 'lucide-react';
 import api from '../../utils/api';
 
 const AdminAddMedicine = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
@@ -36,18 +38,44 @@ const AdminAddMedicine = () => {
     // Fetch categories and health concerns on mount
     const fetchRefs = async () => {
       try {
+        setFetching(true);
         const [catRes, hcRes] = await Promise.all([
           api.get('/categories'),
           api.get('/health-concerns')
         ]);
         setCategories(catRes.data.categories || []);
         setHealthConcerns(hcRes.data.healthConcerns || []);
+        
+        if (id) {
+          const prodRes = await api.get(`/products/${id}`);
+          const p = prodRes.data; // wait, getProductById returns product directly! res.json(product)
+          
+          setFormData({
+            name: p.name || '',
+            genericName: p.genericName || '',
+            brand: p.brand || '',
+            manufacturer: p.manufacturer || '',
+            categoryId: p.categoryId ? p.categoryId._id : '',
+            subcategoryId: p.subcategoryId ? p.subcategoryId._id : '',
+            healthConcernIds: p.healthConcernIds ? p.healthConcernIds.map(h => h._id) : [],
+            productType: p.productType || 'Medicine',
+            description: p.description || '',
+            packSize: p.packSize || '',
+            mrp: p.mrp || '',
+            sellingPrice: p.sellingPrice || '',
+            stockQuantity: p.stockQuantity || '',
+            image: p.image || '',
+            prescriptionRequired: p.prescriptionRequired || false
+          });
+        }
       } catch (err) {
-        console.error("Failed to load reference data", err);
+        console.error("Failed to load data", err);
+      } finally {
+        setFetching(false);
       }
     };
     fetchRefs();
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -87,18 +115,24 @@ const AdminAddMedicine = () => {
       payload.sellingPrice = parseFloat(payload.sellingPrice);
       payload.stockQuantity = parseInt(payload.stockQuantity);
 
-      await api.post('/products', payload);
+      if (id) {
+        await api.put(`/products/${id}`, payload);
+      } else {
+        await api.post('/products', payload);
+      }
       
       setSuccess(true);
       setTimeout(() => {
         navigate('/admin/products');
       }, 1500);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to add product');
+      setError(err.response?.data?.message || `Failed to ${id ? 'update' : 'add'} product`);
     } finally {
       setLoading(false);
     }
   };
+
+  if (fetching) return <div>Loading product data...</div>;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -110,8 +144,8 @@ const AdminAddMedicine = () => {
           <ArrowLeft size={20} />
         </button>
         <div>
-          <h2 className="text-xl font-bold text-slate-800">Add New Product</h2>
-          <p className="text-sm text-slate-500">Create a new product listing in the catalog</p>
+          <h2 className="text-xl font-bold text-slate-800">{id ? 'Edit Product' : 'Add New Product'}</h2>
+          <p className="text-sm text-slate-500">{id ? 'Update product details' : 'Create a new product listing in the catalog'}</p>
         </div>
       </div>
 

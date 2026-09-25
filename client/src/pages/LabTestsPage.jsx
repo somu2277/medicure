@@ -53,7 +53,7 @@ const LabTestsPage = () => {
                   <div className="text-2xl font-bold text-gray-900 flex items-center">
                     <IndianRupee size={20} />{test.price}
                   </div>
-                  <Link to={/lab-tests/} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                  <Link to={`/lab-tests/${test._id}`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Book Now
                   </Link>
                 </div>
@@ -67,7 +67,7 @@ const LabTestsPage = () => {
         <h2 className="text-2xl font-semibold mb-4">All Tests & Packages</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {labTests.map(test => (
-            <Link key={test._id} to={/lab-tests/} className="border rounded-lg p-4 shadow-sm hover:shadow-md transition block cursor-pointer">
+            <Link key={test._id} to={`/lab-tests/${test._id}`} className="border rounded-lg p-4 shadow-sm hover:shadow-md transition block cursor-pointer">
               <h3 className="font-medium text-lg mb-2">{test.name}</h3>
               <p className="text-gray-600 text-sm mb-4 line-clamp-2">{test.description}</p>
               <div className="flex justify-between items-center text-sm">

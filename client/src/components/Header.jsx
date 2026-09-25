@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Percent, ShoppingCart, ChevronRight, ChevronDown, LogOut, MapPin } from 'lucide-react';
+import { User, Percent, ShoppingCart, ChevronRight, ChevronDown, LogOut, MapPin, Package } from 'lucide-react';
 import useCartStore from '../store/cartStore';
 import useAuthStore from '../store/authStore';
 import useAddressStore from '../store/addressStore';
@@ -105,6 +105,13 @@ const Header = () => {
             </Link>
           )}
           
+          {userInfo && (
+            <Link to="/my-orders" className="hidden sm:flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
+              <Package size={22} className="text-slate-600" />
+              <span className="hidden md:block text-sm font-medium">Orders</span>
+            </Link>
+          )}
+          
           <Link to="/offers" className="hidden sm:flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
             <Percent size={22} className="text-slate-600" />
             <span className="hidden md:block text-sm font-medium">Offers</span>
@@ -132,6 +139,10 @@ const Header = () => {
       >
         <div className="container mx-auto px-4 overflow-x-auto hide-scrollbar">
           <nav className="flex items-center md:justify-center gap-6 md:gap-8 text-[14px] font-medium text-slate-700 whitespace-nowrap min-w-max">
+            
+            <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer py-3">
+              Home
+            </Link>
             
             <Link to="/medicines" className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer py-3">
               Medicine <ChevronDown size={14} className="text-slate-400"/>

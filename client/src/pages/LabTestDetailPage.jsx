@@ -20,7 +20,7 @@ const LabTestDetailPage = () => {
   useEffect(() => {
     const fetchTest = async () => {
       try {
-        const response = await api.get(/lab-tests/);
+        const response = await api.get(`/lab-tests/${id}`);
         setTest(response.data);
       } catch (error) {
         console.error('Error fetching lab test:', error);

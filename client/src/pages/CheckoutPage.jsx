@@ -18,6 +18,7 @@ const CheckoutPage = () => {
   const [step, setStep] = useState(1);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [prescriptionStatus, setPrescriptionStatus] = useState(false);
+  const [prescriptionFile, setPrescriptionFile] = useState(null);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,6 +37,18 @@ const CheckoutPage = () => {
     try {
       setIsSubmitting(true);
       
+      let prescriptionId = null;
+      if (requiresPrescription && prescriptionFile) {
+        const formData = new FormData();
+        formData.append('prescription', prescriptionFile);
+        const rxRes = await api.post('/prescriptions', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        if (rxRes.data.success && rxRes.data.prescription) {
+          prescriptionId = rxRes.data.prescription._id;
+        }
+      }
+      
       const orderPayload = {
         items: cartItems.map(item => ({
           productId: item.productId || item._id, // Fallback for legacy cart items
@@ -51,6 +64,7 @@ const CheckoutPage = () => {
           state: selectedAddress.state,
           pincode: selectedAddress.pincode
         } : null,
+        prescriptionId, // attach uploaded prescription ID
         subtotal,
         discount,
         deliveryFee,
@@ -203,20 +217,37 @@ const CheckoutPage = () => {
                 
                 {step === 2 && (
                   <div className="p-4 sm:p-6 border-t border-slate-100">
-                    <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer mb-4">
+                    <label className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-center hover:bg-slate-50 transition-colors cursor-pointer mb-4">
                       <div className="bg-primary/10 p-3 rounded-full text-primary mb-3">
                         <Upload size={24} />
                       </div>
-                      <h3 className="font-semibold text-slate-800 mb-1">Click to upload or drag & drop</h3>
+                      <h3 className="font-semibold text-slate-800 mb-1">
+                        {prescriptionFile ? prescriptionFile.name : 'Click to upload or drag & drop'}
+                      </h3>
                       <p className="text-xs text-slate-500">JPG, PNG or PDF (Max. 5MB)</p>
-                    </div>
+                      <input 
+                        type="file" 
+                        className="hidden" 
+                        accept=".jpg,.jpeg,.png,.pdf" 
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            setPrescriptionFile(e.target.files[0]);
+                          }
+                        }} 
+                      />
+                    </label>
                     <div className="flex justify-end">
                       <button 
                         onClick={() => {
+                          if (!prescriptionFile) {
+                            alert('Please select a prescription file to continue.');
+                            return;
+                          }
                           setPrescriptionStatus(true);
                           setStep(3);
                         }}
-                        className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-lg transition-colors"
+                        disabled={!prescriptionFile}
+                        className={`font-bold py-2.5 px-6 rounded-lg transition-colors ${prescriptionFile ? 'bg-primary hover:bg-primary/90 text-white' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
                       >
                         Upload & Continue
                       </button>

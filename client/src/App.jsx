@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
@@ -15,6 +15,8 @@ import DoctorsPage from './pages/DoctorsPage';
 import DoctorProfilePage from './pages/DoctorProfilePage';
 import ProductPage from './pages/ProductPage';
 import DashboardPage from './pages/DashboardPage';
+import OrderTrackingPage from './pages/OrderTrackingPage';
+import MyOrdersPage from './pages/MyOrdersPage';
 import LabTestsPage from './pages/LabTestsPage';
 import LabTestDetailPage from './pages/LabTestDetailPage';
 import HealthInsightsPage from './pages/HealthInsightsPage';
@@ -52,6 +54,8 @@ const App = () => {
             <Route path="/health-insights/:id" element={<ArticleDetailPage />} />
             
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/order/:id" element={<OrderTrackingPage />} />
+            <Route path="/my-orders" element={<MyOrdersPage />} />
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/doctors/:id" element={<DoctorProfilePage />} />
             

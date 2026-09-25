@@ -45,6 +45,10 @@ const createProduct = async (req, res) => {
         if (!productData.productId) {
             productData.productId = 'MED-' + Date.now();
         }
+        // Sanitize empty strings for ObjectId fields
+        if (productData.categoryId === '') delete productData.categoryId;
+        if (productData.subcategoryId === '') delete productData.subcategoryId;
+
         const product = new Product(productData);
         const createdProduct = await product.save();
         req.app.get('io').emit('product:created', createdProduct);
@@ -59,7 +63,11 @@ const createProduct = async (req, res) => {
 // @access  Private/Admin
 const updateProduct = async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updateData = { ...req.body };
+        if (updateData.categoryId === '') delete updateData.categoryId;
+        if (updateData.subcategoryId === '') delete updateData.subcategoryId;
+
+        const product = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
         if (product) {
             req.app.get('io').emit('product:updated', product);
             res.json(product);
@@ -76,12 +84,10 @@ const updateProduct = async (req, res) => {
 // @access  Private/Admin
 const deleteProduct = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findByIdAndDelete(req.params.id);
         if (product) {
-            product.status = 'Archived'; // Soft delete / archive
-            await product.save();
-            req.app.get('io').emit('product:archived', product._id);
-            res.json({ message: 'Product archived' });
+            req.app.get('io').emit('product:deleted', req.params.id);
+            res.json({ message: 'Product deleted successfully' });
         } else {
             res.status(404).json({ message: 'Product not found' });
         }

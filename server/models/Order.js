@@ -23,11 +23,35 @@ const orderSchema = new mongoose.Schema({
     discount: { type: Number, default: 0 },
     deliveryFee: { type: Number, default: 0 },
     total: { type: Number, required: true },
-    paymentStatus: { type: String, enum: ['PENDING', 'PAID', 'FAILED'], default: 'PENDING' },
+    paymentStatus: { type: String, enum: ['PENDING', 'PAID', 'FAILED', 'REFUNDED'], default: 'PENDING' },
     orderStatus: { 
         type: String, 
-        enum: ['PLACED', 'PRESCRIPTION_REVIEW', 'CONFIRMED', 'PACKING', 'DISPATCHED', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED'],
-        default: 'PLACED'
+        enum: [
+            'PENDING_PAYMENT', 'PAYMENT_CONFIRMED', 'PRESCRIPTION_VERIFICATION',
+            'CONFIRMED', 'PROCESSING', 'PACKED', 'SHIPPED',
+            'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED', 'DELIVERY_FAILED', 'RETURNED', 'REFUNDED'
+        ],
+        default: 'PENDING_PAYMENT'
+    },
+    orderId: { type: String, unique: true },
+    shipment: {
+        courierName: String,
+        trackingNumber: String,
+        estimatedDeliveryDate: Date,
+        shippedDate: Date,
+        deliveredDate: Date
+    },
+    statusHistory: [{
+        status: String,
+        timestamp: { type: Date, default: Date.now },
+        updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        notes: String
+    }],
+    payment: {
+        transactionId: String,
+        method: String,
+        gateway: String,
+        amount: Number
     }
 }, { timestamps: true });
 

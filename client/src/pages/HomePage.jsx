@@ -1,50 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Search, ChevronRight, ChevronLeft, Clock } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import api from '../utils/api';
 
 // Dummy Data mapped to UI Design structure
 const quickLinks = [
-  { name: 'Medicine', offer: 'SAVE 27%', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Medicine' },
-  { name: 'Lab Tests', offer: 'UPTO 70% OFF', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Lab+Tests' },
-  { name: 'Doctor Consult', offer: 'FROM ₹199', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Consult' },
-  { name: 'Branded Substitute', offer: 'UPTO 50% OFF', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Substitute' },
-  { name: 'Healthcare', offer: 'UPTO 60% OFF', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Healthcare' },
-  { name: 'Health Blogs', offer: '', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Blogs', link: '/health-insights' },
-  { name: 'PLUS', offer: 'Save 5% Extra', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=PLUS' },
-  { name: 'Offers', offer: '', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Offers' },
-  { name: 'Value Store', offer: 'UPTO 50% OFF', img: 'https://placehold.co/200x200/e2e8f0/64748b?text=Store' },
+  { name: 'Medicine', offer: 'SAVE 27%', img: 'https://img.icons8.com/color/96/000000/pills.png' },
+  { name: 'Lab Tests', offer: 'UPTO 70% OFF', img: 'https://img.icons8.com/color/96/000000/microscope.png' },
+  { name: 'Doctor Consult', offer: 'FROM ₹199', img: 'https://img.icons8.com/color/96/000000/stethoscope.png' },
+  { name: 'Branded Substitute', offer: 'UPTO 50% OFF', img: 'https://img.icons8.com/color/96/000000/replace.png' },
+  { name: 'Healthcare', offer: 'UPTO 60% OFF', img: 'https://img.icons8.com/color/96/000000/medical-heart.png' },
+  { name: 'Health Blogs', offer: '', img: 'https://img.icons8.com/color/96/000000/health-book.png', link: '/health-insights' },
+  { name: 'PLUS', offer: 'Save 5% Extra', img: 'https://img.icons8.com/color/96/000000/plus-math.png' },
+  { name: 'Offers', offer: '', img: 'https://img.icons8.com/color/96/000000/discount.png' },
+  { name: 'Value Store', offer: 'UPTO 50% OFF', img: 'https://img.icons8.com/color/96/000000/shop.png' },
 ];
 
 const labTestConcerns = [
-  { name: 'Full Body Checkup', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Body' },
-  { name: 'Vitamins', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Vitamins' },
-  { name: 'Diabetes', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Diabetes' },
-  { name: 'Fever', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Fever' },
-  { name: 'Thyroid', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Thyroid' },
-  { name: 'Heart', img: 'https://placehold.co/200x200/f8fafc/64748b?text=Heart' }
+  { name: 'Full Body Checkup', img: 'https://img.icons8.com/color/96/000000/body-scan.png' },
+  { name: 'Vitamins', img: 'https://img.icons8.com/color/96/000000/pill.png' },
+  { name: 'Diabetes', img: 'https://img.icons8.com/color/96/000000/sugar-cube.png' },
+  { name: 'Fever', img: 'https://img.icons8.com/color/96/000000/thermometer.png' },
+  { name: 'Thyroid', img: 'https://img.icons8.com/color/96/000000/throat.png' },
+  { name: 'Heart', img: 'https://img.icons8.com/color/96/000000/heart-health.png' }
 ];
 
 const mockDeals = [
-  { _id: '1', name: 'Bontress Pro+ Scalp Serum', brand: 'Bontress', mrp: 1500, sellingPrice: 1410, discount: 6, image: 'https://placehold.co/400x400/ffffff/64748b?text=Serum' },
-  { _id: '2', name: 'Ahaglow Advanced Tube Of 200Gm', brand: 'Ahaglow', mrp: 798, sellingPrice: 743, discount: 7, image: 'https://placehold.co/400x400/ffffff/64748b?text=Ahaglow' },
-  { _id: '3', name: 'Conscious Chemist Blackhead Melting', brand: 'Conscious Chemist', mrp: 299, sellingPrice: 231, discount: 23, image: 'https://placehold.co/400x400/ffffff/64748b?text=Chemist' },
-  { _id: '4', name: 'Complan Nutritional Drink', brand: 'Complan', mrp: 309, sellingPrice: 300, discount: 3, image: 'https://placehold.co/400x400/ffffff/64748b?text=Complan' },
-  { _id: '5', name: 'Moov Pain Relief Specialist Tube', brand: 'Moov', mrp: 180, sellingPrice: 171, discount: 5, image: 'https://placehold.co/400x400/ffffff/64748b?text=Moov' },
+  { _id: '1', name: 'Bontress Pro+ Scalp Serum', brand: 'Bontress', mrp: 1500, sellingPrice: 1410, discount: 6, image: 'https://img.icons8.com/color/144/000000/pills.png' },
+  { _id: '2', name: 'Ahaglow Advanced Tube Of 200Gm', brand: 'Ahaglow', mrp: 798, sellingPrice: 743, discount: 7, image: 'https://img.icons8.com/color/144/000000/bandage.png' },
+  { _id: '3', name: 'Conscious Chemist Blackhead Melting', brand: 'Conscious Chemist', mrp: 299, sellingPrice: 231, discount: 23, image: 'https://img.icons8.com/color/144/000000/syringe.png' },
+  { _id: '4', name: 'Complan Nutritional Drink', brand: 'Complan', mrp: 309, sellingPrice: 300, discount: 3, image: 'https://img.icons8.com/color/144/000000/apple.png' },
+  { _id: '5', name: 'Moov Pain Relief Specialist Tube', brand: 'Moov', mrp: 180, sellingPrice: 171, discount: 5, image: 'https://img.icons8.com/color/144/000000/bandage.png' },
 ];
 
 const featuredBrands = [
-  { name: 'Lineator', img: 'https://placehold.co/200x200/ffffff/64748b?text=Lineator' },
-  { name: 'Biluma', img: 'https://placehold.co/200x200/ffffff/64748b?text=Biluma' },
-  { name: 'Oryza', img: 'https://placehold.co/200x200/ffffff/64748b?text=Oryza' },
-  { name: 'Ahaglow', img: 'https://placehold.co/200x200/ffffff/64748b?text=Ahaglow' },
-  { name: 'Nasoclear', img: 'https://placehold.co/200x200/ffffff/64748b?text=Nasoclear' },
-  { name: 'Obesigo', img: 'https://placehold.co/200x200/ffffff/64748b?text=Obesigo' },
+  { name: 'Lineator', img: 'https://img.icons8.com/color/144/000000/pills.png' },
+  { name: 'Biluma', img: 'https://img.icons8.com/color/144/000000/hospital.png' },
+  { name: 'Oryza', img: 'https://img.icons8.com/color/144/000000/stethoscope.png' },
+  { name: 'Ahaglow', img: 'https://img.icons8.com/color/144/000000/microscope.png' },
+  { name: 'Nasoclear', img: 'https://img.icons8.com/color/144/000000/wheelchair.png' },
+  { name: 'Obesigo', img: 'https://img.icons8.com/color/144/000000/doctor-female.png' },
 ];
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/medicines?search=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -73,19 +82,21 @@ const HomePage = () => {
 
         {/* Main Search Bar */}
         <div className="relative mb-12">
-          <div className="flex items-center border border-slate-200 rounded-full overflow-hidden shadow-sm h-[52px]">
+          <form onSubmit={handleSearch} className="flex items-center border border-slate-200 rounded-full overflow-hidden shadow-sm h-[52px]">
             <div className="pl-4 pr-3 text-slate-400">
               <Search size={20} />
             </div>
             <input
               type="text"
               placeholder="Search for Shampoo"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full py-3 outline-none text-[15px] text-slate-700 h-full placeholder:text-slate-400"
             />
-            <button className="bg-teal-600 hover:bg-teal-700 text-white px-8 h-full flex items-center justify-center font-bold text-[15px] transition-colors m-1 rounded-full">
+            <button type="submit" className="bg-teal-600 hover:bg-teal-700 text-white px-8 h-full flex items-center justify-center font-bold text-[15px] transition-colors m-1 rounded-full">
               Search
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Quick Links */}
@@ -154,7 +165,11 @@ const HomePage = () => {
               {categories.map((cat, idx) => (
                 <Link to={`/category/${cat.slug}`} key={idx} className="flex flex-col items-center group cursor-pointer">
                   <div className="w-full aspect-square bg-slate-50 rounded-xl p-6 mb-3 border border-slate-100 group-hover:border-teal-500 transition-colors flex items-center justify-center">
-                    <span className="text-4xl text-teal-600">{cat.name.charAt(0)}</span>
+                    {cat.image ? (
+                      <img src={cat.image} alt={cat.name} className="w-16 h-16 object-contain group-hover:scale-110 transition-transform" />
+                    ) : (
+                      <span className="text-4xl text-teal-600">{cat.name.charAt(0)}</span>
+                    )}
                   </div>
                   <span className="text-[14px] font-medium text-slate-700 text-center leading-tight group-hover:text-teal-600 transition-colors">{cat.name}</span>
                 </Link>
