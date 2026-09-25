@@ -15,6 +15,8 @@ import DoctorsPage from './pages/DoctorsPage';
 import DoctorProfilePage from './pages/DoctorProfilePage';
 import ProductPage from './pages/ProductPage';
 import OrdersPage from './pages/OrdersPage';
+import LabTestsPage from './pages/LabTestsPage';
+import LabTestDetailPage from './pages/LabTestDetailPage';
 
 const App = () => {
   return (
@@ -36,6 +38,8 @@ const App = () => {
             
             <Route path="/category/:slug" element={<CategoryPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/lab-tests" element={<LabTestsPage />} />
+            <Route path="/lab-tests/:id" element={<LabTestDetailPage />} />
             
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/doctors" element={<DoctorsPage />} />
