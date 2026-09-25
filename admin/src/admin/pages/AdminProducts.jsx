@@ -119,7 +119,17 @@ const AdminProducts = () => {
                         <button className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded transition-colors" title="Edit">
                           <Edit2 size={16} />
                         </button>
-                        <button className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors" title="Delete">
+                        <button 
+                          onClick={() => {
+                            if (window.confirm('Are you sure you want to delete this product?')) {
+                              api.delete(`/products/${product._id}`)
+                                .then(() => fetchProducts())
+                                .catch(err => alert('Failed to delete product'));
+                            }
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors" 
+                          title="Delete"
+                        >
                           <Trash2 size={16} />
                         </button>
                       </div>

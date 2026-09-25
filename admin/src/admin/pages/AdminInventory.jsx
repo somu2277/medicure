@@ -38,10 +38,16 @@ const AdminInventory = () => {
 
   const updateStock = async (id, newStock) => {
     try {
-      await api.patch(`/products/${id}`, { stockQuantity: newStock });
-      fetchInventory(); // socket will also trigger this, but optimistic is good
+      // Optimistic update
+      setInventory(inventory.map(item => 
+        item._id === id ? { ...item, stockQuantity: newStock } : item
+      ));
+      
+      await api.put(`/products/${id}`, { stockQuantity: newStock });
     } catch (err) {
       console.error('Failed to update stock', err);
+      alert('Failed to update stock');
+      fetchInventory(); // revert
     }
   };
 

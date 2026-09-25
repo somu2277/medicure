@@ -40,11 +40,16 @@ const AdminOrders = () => {
 
   const updateStatus = async (orderId, newStatus) => {
     try {
+      // Optimistic update
+      setOrders(orders.map(order => 
+        order._id === orderId ? { ...order, orderStatus: newStatus } : order
+      ));
+      
       await api.patch(`/orders/${orderId}/status`, { orderStatus: newStatus });
-      // The socket event will trigger a refetch, but we could optimistic update here
-      fetchOrders();
     } catch (err) {
       console.error('Failed to update status', err);
+      alert('Failed to update order status');
+      fetchOrders(); // Revert on failure
     }
   };
 
