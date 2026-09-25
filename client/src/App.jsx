@@ -17,6 +17,8 @@ import ProductPage from './pages/ProductPage';
 import OrdersPage from './pages/OrdersPage';
 import LabTestsPage from './pages/LabTestsPage';
 import LabTestDetailPage from './pages/LabTestDetailPage';
+import HealthInsightsPage from './pages/HealthInsightsPage';
+import ArticleDetailPage from './pages/ArticleDetailPage';
 
 const App = () => {
   return (
