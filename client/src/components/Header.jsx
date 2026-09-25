@@ -89,7 +89,7 @@ const Header = () => {
           
           {userInfo ? (
             <div className="flex items-center gap-4">
-              <Link to="/orders" className="flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
+              <Link to="/dashboard" className="flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
                 <User size={22} className="text-slate-600" />
                 <span className="hidden md:block text-sm font-medium truncate max-w-[100px]">Hello, {userInfo.name.split(' ')[0]}</span>
               </Link>

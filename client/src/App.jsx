@@ -14,7 +14,7 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import DoctorsPage from './pages/DoctorsPage';
 import DoctorProfilePage from './pages/DoctorProfilePage';
 import ProductPage from './pages/ProductPage';
-import OrdersPage from './pages/OrdersPage';
+import DashboardPage from './pages/DashboardPage';
 import LabTestsPage from './pages/LabTestsPage';
 import LabTestDetailPage from './pages/LabTestDetailPage';
 import HealthInsightsPage from './pages/HealthInsightsPage';
@@ -42,8 +42,10 @@ const App = () => {
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/lab-tests" element={<LabTestsPage />} />
             <Route path="/lab-tests/:id" element={<LabTestDetailPage />} />
+            <Route path="/health-insights" element={<HealthInsightsPage />} />
+            <Route path="/health-insights/:id" element={<ArticleDetailPage />} />
             
-            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/doctors/:id" element={<DoctorProfilePage />} />
             
