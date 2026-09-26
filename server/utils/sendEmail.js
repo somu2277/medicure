@@ -1,16 +1,21 @@
 const nodemailer = require('nodemailer');
+const dns = require('dns').promises;
 
-// Create reusable transporter object using connection pooling
-// This prevents the overhead of creating a new SMTP connection on every single email
 let transporter;
 
-const getTransporter = () => {
+const getTransporter = async () => {
     if (!transporter) {
+        // Manually resolve IPv4 to completely bypass Render's broken IPv6 routing
+        const addresses = await dns.resolve4(process.env.SMTP_HOST);
+        const ipv4Host = addresses[0];
+        
         transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: 465, // Force secure port 465 instead of 587
-            secure: true, // Required for port 465
-            family: 4, // Force IPv4
+            host: ipv4Host,
+            port: 465,
+            secure: true,
+            tls: {
+                servername: process.env.SMTP_HOST // Prevent SSL Certificate Mismatch
+            },
             connectionTimeout: 10000,
             greetingTimeout: 10000,
             socketTimeout: 15000,
@@ -24,9 +29,8 @@ const getTransporter = () => {
 };
 
 const sendEmail = async (options) => {
-    const activeTransporter = getTransporter();
+    const activeTransporter = await getTransporter();
 
-    // send mail with defined transport object
     const message = {
         from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
         to: options.email,
@@ -36,7 +40,6 @@ const sendEmail = async (options) => {
     };
 
     const info = await activeTransporter.sendMail(message);
-
     console.log('Message sent: %s', info.messageId);
 };
 
