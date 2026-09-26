@@ -30,6 +30,12 @@ const AdminPrescriptions = () => {
     fetchPrescriptions();
   }, []);
 
+  const filteredPrescriptions = prescriptions.filter(rx => 
+    (rx.userId?.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (rx.userId?.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (rx._id || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">

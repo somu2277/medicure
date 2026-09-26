@@ -8,6 +8,7 @@ const AdminCustomers = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customerDetails, setCustomerDetails] = useState(null);
   const [detailsLoading, setDetailsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -36,6 +37,12 @@ const AdminCustomers = () => {
       setDetailsLoading(false);
     }
   };
+
+  const filteredCustomers = customers.filter(c => 
+    (c.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (c.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (c.phone || '').includes(searchTerm)
+  );
 
   return (
     <div className="max-w-6xl mx-auto relative">
