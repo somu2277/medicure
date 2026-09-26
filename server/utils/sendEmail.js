@@ -9,6 +9,7 @@ const getTransporter = () => {
         transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: process.env.SMTP_PORT,
+            family: 4, // Force IPv4 (fixes ENETUNREACH on Render)
             pool: true, // Use pooled connections for faster subsequent emails
             maxConnections: 1, // Gmail limits concurrent connections for personal accounts
             connectionTimeout: 10000, // 10 seconds timeout for initial connection
