@@ -374,7 +374,7 @@ const AdminOrders = () => {
                             {selectedOrder.prescriptionId.status}
                           </span>
                         </div>
-                        <a href={`http://localhost:5000${selectedOrder.prescriptionId.fileUrl}`} target="_blank" rel="noreferrer" className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-semibold py-1.5 px-4 rounded transition-colors flex items-center gap-2">
+                        <a href={`${import.meta.env.VITE_SOCKET_URL || 'https://medicure-server-kzu6.onrender.com'}${selectedOrder.prescriptionId.fileUrl}`} target="_blank" rel="noreferrer" className="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-semibold py-1.5 px-4 rounded transition-colors flex items-center gap-2">
                           <Eye size={14} /> View Prescription
                         </a>
                       </div>

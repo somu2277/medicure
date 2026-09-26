@@ -95,6 +95,10 @@ const sendEmail = require('../utils/sendEmail');
 // @route   POST /api/admin/request-email-change
 // @access  Private/Admin
 const requestEmailChange = async (req, res) => {
+    const startTime = Date.now();
+    const requestId = crypto.randomBytes(4).toString('hex');
+    console.log(`[Req ${requestId}] Starting email change OTP request`);
+
     try {
         const { currentPassword, newEmail } = req.body;
         
@@ -117,6 +121,8 @@ const requestEmailChange = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Email already registered' });
         }
 
+        console.log(`[Req ${requestId}] Password verified in ${Date.now() - startTime}ms`);
+        
         // 4. Generate cryptographically secure OTP
         const otp = crypto.randomInt(100000, 999999).toString();
         
