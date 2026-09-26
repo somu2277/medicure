@@ -20,7 +20,7 @@ const OrdersPage = () => {
         // Fetch all user data in parallel
         const [ordersRes, apptRes, labRes] = await Promise.all([
           api.get('/orders').catch(() => ({ data: { orders: [] } })),
-          api.get('/appointments').catch(() => ({ data: [] })),
+          api.get('/appointments/my-appointments').catch(() => ({ data: [] })),
           api.get('/lab-bookings').catch(() => ({ data: { bookings: [] } }))
         ]);
         
@@ -43,16 +43,16 @@ const OrdersPage = () => {
   const getStatusColor = (status) => {
     if (!status) return 'text-slate-600 bg-slate-100 border-slate-200';
     const s = status.toUpperCase();
-    if (s.includes('DELIVERED') || s.includes('COMPLETED') || s.includes('CONFIRMED')) return 'text-success bg-success/10 border-success/20';
+    if (s.includes('DELIVERED') || s.includes('COMPLETED') || s.includes('CONFIRMED') || s.includes('APPROVED')) return 'text-success bg-success/10 border-success/20';
     if (s.includes('OUT') || s.includes('READY')) return 'text-primary bg-primary/10 border-primary/20';
-    if (s.includes('CANCELLED') || s.includes('FAILED')) return 'text-error bg-error/10 border-error/20';
+    if (s.includes('CANCELLED') || s.includes('FAILED') || s.includes('REJECTED')) return 'text-error bg-error/10 border-error/20';
     return 'text-blue-600 bg-blue-50 border-blue-100'; // processing/pending
   };
 
   const getStatusIcon = (status) => {
     if (!status) return <Clock size={16} />;
     const s = status.toUpperCase();
-    if (s.includes('DELIVERED') || s.includes('COMPLETED')) return <CheckCircle size={16} />;
+    if (s.includes('DELIVERED') || s.includes('COMPLETED') || s.includes('APPROVED')) return <CheckCircle size={16} />;
     if (s.includes('OUT')) return <Truck size={16} />;
     return <Clock size={16} />;
   };
@@ -173,20 +173,48 @@ const OrdersPage = () => {
             <div className="space-y-4">
               {data.appointments.map(appt => (
                 <div key={appt._id} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col sm:flex-row justify-between gap-4">
-                  <div>
-                    <h3 className="font-bold text-lg text-slate-800">Dr. {appt.doctorId?.name || 'Unknown'}</h3>
-                    <p className="text-sm text-slate-500 mb-2">{appt.doctorId?.specialization}</p>
-                    <div className="flex gap-4 text-sm text-slate-700">
-                      <span className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded"><Calendar size={14}/> {new Date(appt.date).toLocaleDateString()}</span>
-                      <span className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded"><Clock size={14}/> {appt.timeSlot}</span>
-                    </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-lg text-slate-800">Dr. {appt.doctorId?.userId?.name || 'Doctor'}</h3>
+                    <p className="text-sm text-slate-500 mb-4">{appt.doctorId?.specialization || 'Consultation'}</p>
+                    
+                    {appt.confirmedDate ? (
+                        <div className="bg-emerald-50 border border-emerald-100 p-3 rounded-lg mb-3">
+                            <span className="text-xs text-emerald-700 font-bold block mb-1">CONFIRMED SCHEDULE</span>
+                            <div className="flex gap-4 text-sm text-emerald-800">
+                              <span className="flex items-center gap-1"><Calendar size={14}/> {new Date(appt.confirmedDate).toLocaleDateString()}</span>
+                              <span className="flex items-center gap-1"><Clock size={14}/> {appt.confirmedStartTime}</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg mb-3">
+                            <span className="text-xs text-slate-500 font-bold block mb-1">REQUESTED PREFERENCES</span>
+                            <div className="flex gap-4 text-sm text-slate-700">
+                              <span className="flex items-center gap-1"><Calendar size={14}/> {appt.preferredDate ? new Date(appt.preferredDate).toLocaleDateString() : 'Any Date'}</span>
+                              <span className="flex items-center gap-1"><Clock size={14}/> {appt.preferredTimeOfDay || 'Any Time'}</span>
+                            </div>
+                            <p className="text-xs text-amber-600 mt-2 font-medium">Your appointment is awaiting scheduling. Our team will contact you after checking the doctor's availability.</p>
+                        </div>
+                    )}
+                    
+                    {appt.schedulingNotes && (
+                        <p className="text-sm text-blue-700 bg-blue-50 p-2 rounded mt-2 border border-blue-100"><strong>Note from Admin:</strong> {appt.schedulingNotes}</p>
+                    )}
+
+                    {appt.meetingLink && appt.status.includes('Approved') && (
+                        <a href={`https://${appt.meetingLink}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-3 text-sm bg-blue-600 text-white font-bold px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                            Join Video Call
+                        </a>
+                    )}
+                    {appt.rejectionReason && appt.status === 'Rejected' && (
+                        <p className="text-sm text-red-600 mt-3 bg-red-50 p-2 rounded border border-red-100"><strong>Reason for Rejection:</strong> {appt.rejectionReason}</p>
+                    )}
                   </div>
-                  <div className="flex flex-col items-end justify-between">
+                  <div className="flex flex-col items-end justify-between min-w-[120px]">
                     <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(appt.status)}`}>
                       {getStatusIcon(appt.status)}
                       {appt.status}
                     </div>
-                    <span className="text-sm font-bold text-slate-800 mt-4">,1{appt.amount}</span>
+                    <span className="text-sm font-bold text-slate-800 mt-4">₹{appt.feeSnapshot}</span>
                   </div>
                 </div>
               ))}

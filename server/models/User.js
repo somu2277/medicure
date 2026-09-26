@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         ], 
         default: 'CUSTOMER' 
     },
+    username: { type: String, unique: true, sparse: true },
+    avatar: { type: String, default: '' },
+    pendingEmail: { type: String },
+    emailChangeOtp: { type: String },
+    emailChangeOtpExpire: { type: Date },
+    emailChangeOtpAttempts: { type: Number, default: 0 },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     otp: String,

@@ -6,7 +6,11 @@ const crypto = require('crypto');
 // Get All Doctors (Public)
 exports.getAllDoctors = async (req, res) => {
     try {
-        const doctors = await Doctor.find({ isActive: true }).populate('userId', 'name email');
+        const { specialization } = req.query;
+        let filter = { status: 'Verified' };
+        if (specialization) filter.specialization = new RegExp(specialization, 'i');
+        
+        const doctors = await Doctor.find(filter).populate('userId', 'name email');
         res.json(doctors);
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });

@@ -6,11 +6,26 @@ const doctorSchema = new mongoose.Schema({
     qualifications: { type: [String], required: true },
     experienceYears: { type: Number, required: true },
     medicalRegistrationNumber: { type: String, required: true, unique: true },
+    registrationAuthority: { type: String },
     languagesSpoken: { type: [String], default: [] },
-    isVerified: { type: Boolean, default: false },
+    status: {
+        type: String,
+        enum: ['Pending Verification', 'Verified', 'Rejected', 'Inactive', 'Suspended'],
+        default: 'Pending Verification'
+    },
+    rejectionReason: { type: String },
     verificationDocuments: [{ type: String }],
     bio: { type: String },
+    hospitalName: { type: String },
+    clinicAddress: { type: String },
     consultationFee: { type: Number, required: true },
+    followUpFee: { type: Number },
+    consultationType: {
+        type: String,
+        enum: ['Video', 'In-person', 'Both'],
+        default: 'Video'
+    },
+    consultationDuration: { type: Number, default: 30 }, // in minutes
     availability: [{
         dayOfWeek: { 
             type: String, 
@@ -18,9 +33,9 @@ const doctorSchema = new mongoose.Schema({
             required: true
         },
         startTime: { type: String, required: true },
-        endTime: { type: String, required: true }
+        endTime: { type: String, required: true },
+        maxAppointments: { type: Number, default: 1 }
     }],
-    isActive: { type: Boolean, default: true },
     rating: { type: Number, default: 0 },
     reviewsCount: { type: Number, default: 0 },
     imageUrl: { type: String }

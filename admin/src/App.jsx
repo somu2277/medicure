@@ -14,6 +14,7 @@ import AdminSettings from './admin/pages/AdminSettings';
 import AdminLogin from './admin/pages/AdminLogin';
 import AdminForgotPassword from './admin/pages/AdminForgotPassword';
 import AdminDoctors from './admin/pages/AdminDoctors';
+import AdminAppointments from './admin/pages/AdminAppointments';
 
 // A simple auth wrapper (could be expanded)
 const AdminRoute = ({ children }) => {
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="lab-tests" element={<AdminLabTests />} />
           <Route path="customers" element={<AdminCustomers />} />
           <Route path="doctors" element={<AdminDoctors />} />
+          <Route path="appointments" element={<AdminAppointments />} />
           <Route path="settings" element={<AdminSettings />} />
           
           <Route path="*" element={<div className="p-8 text-slate-500 text-center font-bold text-xl">404 - Admin Module Not Found</div>} />

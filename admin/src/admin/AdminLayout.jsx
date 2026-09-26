@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Package, Tag, Users, ShoppingCart, 
-  FileText, Activity, AlertCircle, Settings, LogOut, Stethoscope 
+  FileText, Activity, AlertCircle, Settings, LogOut, Stethoscope, Calendar 
 } from 'lucide-react';
 import socket from '../utils/socket';
 
 const AdminLayout = () => {
   const location = useLocation();
   const [socketStatus, setSocketStatus] = useState('Offline');
+
+  const [adminUser, setAdminUser] = useState(() => {
+    const info = localStorage.getItem('userInfo');
+    return info ? JSON.parse(info) : { name: 'Admin User', role: 'Super Admin', email: '' };
+  });
 
   useEffect(() => {
     socket.connect();
@@ -18,12 +23,26 @@ const AdminLayout = () => {
     socket.on('disconnect', () => setSocketStatus('Offline'));
     socket.io.on('reconnect_attempt', () => setSocketStatus('Reconnecting'));
 
+    const handleProfileUpdate = (e) => {
+      setAdminUser(e.detail);
+      const info = JSON.parse(localStorage.getItem('userInfo') || '{}');
+      localStorage.setItem('userInfo', JSON.stringify({ ...info, ...e.detail }));
+    };
+    window.addEventListener('adminProfileUpdated', handleProfileUpdate);
+
     return () => {
       socket.off('connect');
       socket.off('disconnect');
       socket.io.off('reconnect_attempt');
+      window.removeEventListener('adminProfileUpdated', handleProfileUpdate);
     };
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userInfo');
+    window.location.href = '/admin/login';
+  };
 
   const menuItems = [
     { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
@@ -35,8 +54,11 @@ const AdminLayout = () => {
     { name: 'Lab Tests', path: '/admin/lab-tests', icon: <Activity size={20} /> },
     { name: 'Customers', path: '/admin/customers', icon: <Users size={20} /> },
     { name: 'Doctors', path: '/admin/doctors', icon: <Stethoscope size={20} /> },
+    { name: 'Appointments', path: '/admin/appointments', icon: <Calendar size={20} /> },
     { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
   ];
+
+  const adminInitials = adminUser.name ? adminUser.name.substring(0, 2).toUpperCase() : 'AD';
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans">
@@ -71,7 +93,7 @@ const AdminLayout = () => {
         </div>
         
         <div className="p-4 border-t border-slate-800">
-          <button className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">
+          <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors">
             <LogOut size={20} />
             Logout
           </button>
@@ -93,12 +115,16 @@ const AdminLayout = () => {
             </div>
             <div className="h-6 w-px bg-slate-200"></div>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-sm">
-                AD
-              </div>
+              {adminUser.avatar ? (
+                <img src={adminUser.avatar} alt="Avatar" className="w-8 h-8 rounded-full object-cover border border-slate-200" />
+              ) : (
+                <div className="w-8 h-8 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-sm">
+                  {adminInitials}
+                </div>
+              )}
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-slate-700 leading-tight">Admin User</span>
-                <span className="text-[11px] text-slate-500">Super Admin</span>
+                <span className="text-sm font-bold text-slate-700 leading-tight">{adminUser.name}</span>
+                <span className="text-[11px] text-slate-500 capitalize">{adminUser.role?.replace('_', ' ').toLowerCase()}</span>
               </div>
             </div>
           </div>
