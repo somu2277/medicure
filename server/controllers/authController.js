@@ -207,9 +207,7 @@ exports.sendOtp = async (req, res) => {
             res.status(200).json({ success: true, message: 'OTP sent to email' });
         } catch (emailError) {
             console.error('SMTP Error:', emailError.message);
-            // Fallback for development if SMTP fails
-            console.log(`\n======================================\n🚀 DEVELOPMENT MODE: OTP for ${email} is: ${otp}\n======================================\n`);
-            res.status(200).json({ success: true, message: 'OTP sent (Check terminal output)' });
+            res.status(500).json({ success: false, message: 'Failed to send OTP via email. Please check SMTP configuration.' });
         }
 
     } catch (error) {
