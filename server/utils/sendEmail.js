@@ -11,6 +11,9 @@ const getTransporter = () => {
             port: process.env.SMTP_PORT,
             pool: true, // Use pooled connections for faster subsequent emails
             maxConnections: 1, // Gmail limits concurrent connections for personal accounts
+            connectionTimeout: 10000, // 10 seconds timeout for initial connection
+            greetingTimeout: 10000, // 10 seconds timeout for greeting
+            socketTimeout: 15000, // 15 seconds timeout for socket inactivity
             auth: {
                 user: process.env.SMTP_EMAIL,
                 pass: process.env.SMTP_PASSWORD

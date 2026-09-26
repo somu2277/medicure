@@ -103,8 +103,16 @@ exports.forgotPassword = async (req, res) => {
 
         await user.save({ validateBeforeSave: false });
 
-        // Create reset url
-        const resetUrl = `http://localhost:5174/admin/reset-password/${resetToken}`;
+        // Create reset url based on the client that requested it
+        const origin = req.get('origin') || 'https://medicure-rho.vercel.app';
+        let resetPath = '/reset-password/';
+        
+        // If the request came from the admin app, route them to the admin reset page
+        if (origin.includes('admin') || origin.includes('5174')) {
+            resetPath = '/admin/reset-password/';
+        }
+        
+        const resetUrl = `${origin}${resetPath}${resetToken}`;
 
         const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
 
