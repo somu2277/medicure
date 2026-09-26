@@ -145,8 +145,6 @@ const Header = () => {
         onMouseLeave={() => setIsMegaMenuOpen(false)}
       >
         <div className="container mx-auto px-4 overflow-x-auto hide-scrollbar">
-
-        <div className="container mx-auto px-4 overflow-x-auto hide-scrollbar">
           <nav className="flex items-center md:justify-center gap-6 md:gap-8 text-[14px] font-medium text-slate-700 whitespace-nowrap min-w-max">
             
             <Link to="/" className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer py-3">
