@@ -329,8 +329,8 @@ const AdminOrders = () => {
                 <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
                   <Package size={16} className="text-slate-400" /> Products
                 </h3>
-                <div className="border border-slate-200 rounded-lg overflow-hidden">
-                  <table className="w-full text-left">
+                <div className="border border-slate-200 rounded-lg overflow-x-auto">
+                  <table className="w-full text-left min-w-[600px]">
                     <thead className="bg-slate-50 text-xs text-slate-500 uppercase">
                       <tr>
                         <th className="px-4 py-3 font-medium">Item</th>
