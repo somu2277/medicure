@@ -76,9 +76,8 @@ const AdminLayout = () => {
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex flex-col flex-shrink-0 transform transition-transform duration-200 ease-in-out lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800 bg-slate-950">
-          <div className="flex items-center">
-            <div className="bg-teal-500 text-white font-bold px-1.5 py-0.5 rounded text-sm mr-2">MC</div>
-            <span className="text-lg font-bold text-white tracking-tight">MediCare Admin</span>
+          <div className="flex items-center bg-white px-2 py-1 rounded-md">
+            <img src="https://logoarena-storage.s3.amazonaws.com/contests/public/6154/961_1438568522_medicure.jpg" alt="MediCare Admin Logo" className="h-8 object-contain" />
           </div>
           <button className="lg:hidden text-slate-400 hover:text-white" onClick={() => setIsSidebarOpen(false)}>
             <X size={20} />
