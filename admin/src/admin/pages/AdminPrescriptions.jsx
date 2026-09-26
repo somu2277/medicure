@@ -6,6 +6,16 @@ const AdminPrescriptions = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleUpdateStatus = async (id, status) => {
+    try {
+      await api.patch(`/prescriptions/${id}/status`, { status });
+      setPrescriptions(prescriptions.map(rx => rx._id === id ? { ...rx, status } : rx));
+    } catch (err) {
+      console.error('Failed to update status', err);
+      alert('Failed to update status');
+    }
+  };
+
   useEffect(() => {
     const fetchPrescriptions = async () => {
       try {
@@ -60,9 +70,14 @@ const AdminPrescriptions = () => {
                       <p className="text-xs text-slate-500">{rx.userId?.email || 'N/A'}</p>
                     </td>
                     <td className="px-6 py-4">
-                      <button className="flex items-center gap-1.5 text-teal-600 hover:text-teal-700 font-medium text-xs bg-teal-50 px-3 py-1.5 rounded border border-teal-100">
+                      <a 
+                        href={`${import.meta.env.VITE_SOCKET_URL || 'https://medicure-server-kzu6.onrender.com'}${rx.fileUrl}`} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-teal-600 hover:text-teal-700 font-medium text-xs bg-teal-50 px-3 py-1.5 rounded border border-teal-100"
+                      >
                         <FileText size={14} /> View File
-                      </button>
+                      </a>
                     </td>
                     <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded text-[11px] font-bold ${
@@ -78,12 +93,24 @@ const AdminPrescriptions = () => {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button className="p-1.5 text-emerald-500 hover:bg-emerald-50 rounded transition-colors" title="Approve">
-                          <CheckCircle size={18} />
-                        </button>
-                        <button className="p-1.5 text-rose-500 hover:bg-rose-50 rounded transition-colors" title="Reject">
-                          <XCircle size={18} />
-                        </button>
+                        {rx.status !== 'APPROVED' && (
+                            <button 
+                              onClick={() => handleUpdateStatus(rx._id, 'APPROVED')}
+                              className="p-1.5 text-emerald-500 hover:bg-emerald-50 rounded transition-colors" 
+                              title="Approve"
+                            >
+                              <CheckCircle size={18} />
+                            </button>
+                        )}
+                        {rx.status !== 'REJECTED' && (
+                            <button 
+                              onClick={() => handleUpdateStatus(rx._id, 'REJECTED')}
+                              className="p-1.5 text-rose-500 hover:bg-rose-50 rounded transition-colors" 
+                              title="Reject"
+                            >
+                              <XCircle size={18} />
+                            </button>
+                        )}
                       </div>
                     </td>
                   </tr>
