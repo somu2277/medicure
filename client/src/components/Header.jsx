@@ -167,13 +167,7 @@ const Header = () => {
               Lab Tests <ChevronDown size={14} className="text-slate-400"/>
             </Link>
             
-            <Link to="/plus" className="hover:text-primary transition-colors cursor-pointer py-3">
-              PLUS
-            </Link>
-            
-            <Link to="/health-blogs" className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer py-3">
-              Health Insights <ChevronDown size={14} className="text-slate-400"/>
-            </Link>
+
             
             <Link to="/offers" className="hover:text-primary transition-colors cursor-pointer py-3">
               Offers
@@ -216,7 +210,6 @@ const Header = () => {
               <Link to="/doctors" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Doctor Consult</Link>
               <Link to="/lab-tests" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Lab Tests</Link>
               <Link to="/offers" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Offers</Link>
-              <Link to="/health-blogs" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Health Insights</Link>
               
               <div className="mt-auto pt-6 pb-2">
                   {!userInfo ? (
