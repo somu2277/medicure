@@ -25,4 +25,19 @@ router.route('/request-email-change').post(protect, requestEmailChange);
 router.route('/verify-email-change').post(protect, verifyEmailChange);
 router.route('/change-password').put(protect, changePassword);
 
+
+router.get('/test-email', async (req, res) => {
+    const sendEmail = require('../utils/sendEmail');
+    try {
+        await sendEmail({
+            email: 'somu8297968923@gmail.com',
+            subject: 'Render Diagnostic Test',
+            message: 'Testing from Render'
+        });
+        res.json({ success: true, message: 'SMTP Test Passed!' });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message, stack: error.stack });
+    }
+});
+
 module.exports = router;
