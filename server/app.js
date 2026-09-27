@@ -31,6 +31,7 @@ app.use('/api/appointments', require('./routes/appointmentRoutes'));
 app.use('/api/lab-tests', require('./routes/labTestRoutes'));
 app.use('/api/lab-bookings', require('./routes/labBookingRoutes'));
 app.use('/api/articles', require('./routes/articleRoutes'));
+app.use('/api/chatbot', require('./routes/chatbotRoutes'));
 
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'MediCare API is running' });

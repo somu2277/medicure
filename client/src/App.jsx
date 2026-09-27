@@ -21,6 +21,7 @@ import LabTestsPage from './pages/LabTestsPage';
 import LabTestDetailPage from './pages/LabTestDetailPage';
 import HealthInsightsPage from './pages/HealthInsightsPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
+import AskMeChat from './components/AskMeChat';
 
 // Doctor Portal Imports
 import DoctorLogin from './pages/doctor/DoctorLogin';
@@ -69,6 +70,7 @@ const App = () => {
             <Route path="*" element={<PlaceholderPage />} />
           </Routes>
         </main>
+        <AskMeChat />
       </div>
     </Router>
   );
