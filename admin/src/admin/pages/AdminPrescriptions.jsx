@@ -5,6 +5,7 @@ import api from '../../utils/api';
 const AdminPrescriptions = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleUpdateStatus = async (id, status) => {
     try {
@@ -44,6 +45,8 @@ const AdminPrescriptions = () => {
           <input 
             type="text" 
             placeholder="Search prescriptions..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
           />
         </div>
@@ -65,10 +68,10 @@ const AdminPrescriptions = () => {
             <tbody className="text-sm divide-y divide-slate-200">
               {loading ? (
                 <tr><td colSpan="6" className="px-6 py-8 text-center text-slate-500">Loading prescriptions...</td></tr>
-              ) : prescriptions.length === 0 ? (
+              ) : filteredPrescriptions.length === 0 ? (
                 <tr><td colSpan="6" className="px-6 py-8 text-center text-slate-500">No prescriptions found.</td></tr>
               ) : (
-                prescriptions.map((rx) => (
+                filteredPrescriptions.map((rx) => (
                   <tr key={rx._id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4 font-medium text-slate-700">#{rx._id.substring(rx._id.length - 6).toUpperCase()}</td>
                     <td className="px-6 py-4">
