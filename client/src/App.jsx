@@ -21,7 +21,7 @@ import LabTestsPage from './pages/LabTestsPage';
 import LabTestDetailPage from './pages/LabTestDetailPage';
 import HealthInsightsPage from './pages/HealthInsightsPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
-import AskMeChat from './components/AskMeChat';
+import AskEasyPage from './pages/AskEasyPage';
 
 // Doctor Portal Imports
 import DoctorLogin from './pages/doctor/DoctorLogin';
@@ -59,6 +59,7 @@ const App = () => {
             <Route path="/my-orders" element={<MyOrdersPage />} />
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/doctors/:id" element={<DoctorProfilePage />} />
+            <Route path="/ask-easy" element={<AskEasyPage />} />
             
             {/* Doctor Portal Routes */}
             <Route path="/doctor/login" element={<DoctorLogin />} />
@@ -70,7 +71,6 @@ const App = () => {
             <Route path="*" element={<PlaceholderPage />} />
           </Routes>
         </main>
-        <AskMeChat />
       </div>
     </Router>
   );
