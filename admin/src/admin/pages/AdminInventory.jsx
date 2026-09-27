@@ -6,6 +6,7 @@ import socket from '../../utils/socket';
 const AdminInventory = () => {
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchInventory = async () => {
     try {
@@ -29,7 +30,12 @@ const AdminInventory = () => {
     socket.on('product:created', handleUpdate);
     socket.on('order:created', handleUpdate); // Stock decreases on order
 
-    return () => {
+    const filteredInventory = inventory.filter(item => 
+    (item.name || "").toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (item.sku || item.productId || "").toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return () => {
       socket.off('product:updated', handleUpdate);
       socket.off('product:created', handleUpdate);
       socket.off('order:created', handleUpdate);
@@ -57,10 +63,12 @@ const AdminInventory = () => {
         <div className="relative">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input 
-            type="text" 
-            placeholder="Search SKUs or products..." 
-            className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
-          />
+              type="text" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search SKUs or products..." 
+              className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
+            />
         </div>
       </div>
 
@@ -78,10 +86,10 @@ const AdminInventory = () => {
             <tbody className="text-sm divide-y divide-slate-200">
               {loading ? (
                 <tr><td colSpan="4" className="px-6 py-8 text-center text-slate-500">Loading inventory...</td></tr>
-              ) : inventory.length === 0 ? (
+              ) : filteredInventory.length === 0 ? (
                 <tr><td colSpan="4" className="px-6 py-8 text-center text-slate-500">No products found.</td></tr>
               ) : (
-                inventory.map((item) => (
+                filteredInventory.map((item) => (
                   <tr key={item._id} className="hover:bg-slate-50 transition-colors">
                     <td className="px-6 py-4">
                       <p className="font-semibold text-slate-800">{item.name}</p>

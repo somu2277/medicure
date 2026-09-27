@@ -50,10 +50,12 @@ const AdminCustomers = () => {
         <div className="relative">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input 
-            type="text" 
-            placeholder="Search customers..." 
-            className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
-          />
+              type="text" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search customers..." 
+              className="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 w-64 shadow-sm"
+            />
         </div>
       </div>
 
@@ -72,10 +74,10 @@ const AdminCustomers = () => {
             <tbody className="text-sm divide-y divide-slate-200">
               {loading ? (
                 <tr><td colSpan="5" className="px-6 py-8 text-center text-slate-500">Loading customers...</td></tr>
-              ) : customers.length === 0 ? (
+              ) : filteredCustomers.length === 0 ? (
                 <tr><td colSpan="5" className="px-6 py-8 text-center text-slate-500">No customers found.</td></tr>
               ) : (
-                customers.map((customer) => (
+                filteredCustomers.map((customer) => (
                   <tr 
                     key={customer._id} 
                     className="hover:bg-teal-50 transition-colors cursor-pointer"
