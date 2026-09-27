@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../utils/api';
 import socket from '../utils/socket';
-import { ChevronRight, MapPin, CheckCircle } from 'lucide-react';
+import { ChevronRight, MapPin, CheckCircle, ShoppingCart } from 'lucide-react';
 import useAddressStore from '../store/addressStore';
 import useCartStore from '../store/cartStore';
 
