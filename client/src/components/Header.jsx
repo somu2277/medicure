@@ -114,10 +114,7 @@ const Header = () => {
             </Link>
           )}
           
-          <Link to="/offers" className="hidden sm:flex items-center gap-2 text-slate-700 hover:text-primary transition-colors cursor-pointer">
-            <Percent size={22} className="text-slate-600" />
-            <span className="hidden md:block text-sm font-medium">Offers</span>
-          </Link>
+          
           
           <Link to="/cart" className="flex items-center gap-2 text-slate-700 hover:text-primary transition-colors relative">
             <div className="relative">
@@ -169,9 +166,7 @@ const Header = () => {
             
 
             
-            <Link to="/offers" className="hover:text-primary transition-colors cursor-pointer py-3">
-              Offers
-            </Link>
+            
             
             <Link to="/ask-easy" className="hover:text-primary transition-colors cursor-pointer py-3">
               AskEasy
@@ -209,7 +204,7 @@ const Header = () => {
               <Link to="/medicines" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Medicine</Link>
               <Link to="/doctors" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Doctor Consult</Link>
               <Link to="/lab-tests" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Lab Tests</Link>
-              <Link to="/offers" onClick={() => setIsMobileMenuOpen(false)} className="py-3 px-2 font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition-colors border-b border-slate-50">Offers</Link>
+              
               
               <div className="mt-auto pt-6 pb-2">
                   {!userInfo ? (
